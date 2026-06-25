@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import DocumentViewer from "@/components/DocumentViewer";
 import ActivityTimeline from "@/components/ActivityTimeline";
+import { ExpertNotesSection } from "@/components/ExpertNotesSection";
 import { Loader2, Mail, Phone, Briefcase, BookOpen, FileText, Linkedin } from "lucide-react";
 import type { ExpertEmployment, ExpertEducation } from "@shared/types";
 
@@ -282,6 +283,16 @@ export default function ExpertProfileView() {
             </CardContent>
           </Card>
         )}
+
+        {/* Notes Section */}
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-lg">Notes</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <ExpertNotesSection expertId={expertId} />
+          </CardContent>
+        </Card>
 
         {/* Activity Timeline */}
         {projectsQuery.data && projectsQuery.data.length > 0 && (
