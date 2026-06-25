@@ -428,56 +428,25 @@ export const appRouter = router({
             console.log(`[submitProfile] Created new expert`);
           }
 
-          // Send T&C copy to the expert
+          // Send T&C copy to the expert (without attachment for now)
           try {
             const { sendEmail } = await import("./email");
-            try {
-              const pdfPath = join(process.cwd(), "dist", "public", "documents", "alteratives-tnc.pdf");
-              const pdfBuffer = readFileSync(pdfPath);
-              const pdfBase64 = pdfBuffer.toString("base64");
-
-              await sendEmail({
-                to: input.email,
-                subject: "AlterNatives — Your Terms & Conditions Copy",
-                html: `
-                  <div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto">
-                    <div style="background:#0F172A;padding:20px 24px;border-radius:8px 8px 0 0">
-                      <h2 style="color:#fff;margin:0;font-size:18px">Welcome to AlterNatives</h2>
-                    </div>
-                    <div style="padding:24px;border:1px solid #e2e8f0;border-top:none;border-radius:0 0 8px 8px">
-                      <p style="color:#333">Hi ${input.firstName || "there"},</p>
-                      <p style="color:#555">Thank you for joining the AlterNatives Expert Network. Your profile has been successfully submitted.</p>
-                      <p style="color:#555">Please find attached a copy of the Terms &amp; Conditions you accepted during registration.</p>
-                      <p style="color:#555;font-size:13px">Our team will review your profile and be in touch within 24 hours.</p>
-                      <p style="color:#888;font-size:12px;margin-top:24px">© ${new Date().getFullYear()} AlterNatives · nativeworld.com</p>
-                    </div>
-                  </div>`,
-                attachments: [
-                  {
-                    name: "AlterNatives-Terms-and-Conditions.pdf",
-                    content: pdfBase64,
-                  },
-                ],
-              });
-            } catch (pdfErr) {
-              console.warn("[submitProfile] PDF attachment failed, sending email without attachment:", pdfErr);
-              await sendEmail({
-                to: input.email,
-                subject: "AlterNatives — Your Terms & Conditions Copy",
-                html: `
-                  <div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto">
-                    <div style="background:#0F172A;padding:20px 24px;border-radius:8px 8px 0 0">
-                      <h2 style="color:#fff;margin:0;font-size:18px">Welcome to AlterNatives</h2>
-                    </div>
-                    <div style="padding:24px;border:1px solid #e2e8f0;border-top:none;border-radius:0 0 8px 8px">
-                      <p style="color:#333">Hi ${input.firstName || "there"},</p>
-                      <p style="color:#555">Thank you for joining the AlterNatives Expert Network. Your profile has been successfully submitted.</p>
-                      <p style="color:#555">Our team will review your profile and be in touch within 24 hours.</p>
-                      <p style="color:#888;font-size:12px;margin-top:24px">© ${new Date().getFullYear()} AlterNatives · nativeworld.com</p>
-                    </div>
-                  </div>`,
-              });
-            }
+            await sendEmail({
+              to: input.email,
+              subject: "AlterNatives — Your Terms & Conditions Copy",
+              html: `
+                <div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto">
+                  <div style="background:#0F172A;padding:20px 24px;border-radius:8px 8px 0 0">
+                    <h2 style="color:#fff;margin:0;font-size:18px">Welcome to AlterNatives</h2>
+                  </div>
+                  <div style="padding:24px;border:1px solid #e2e8f0;border-top:none;border-radius:0 0 8px 8px">
+                    <p style="color:#333">Hi ${input.firstName || "there"},</p>
+                    <p style="color:#555">Thank you for joining the AlterNatives Expert Network. Your profile has been successfully submitted.</p>
+                    <p style="color:#555">Our team will review your profile and be in touch within 24 hours.</p>
+                    <p style="color:#888;font-size:12px;margin-top:24px">© ${new Date().getFullYear()} AlterNatives · nativeworld.com</p>
+                  </div>
+                </div>`,
+            });
           } catch (tcMailErr) {
             console.warn("[submitProfile] T&C email to expert failed:", tcMailErr);
           }
