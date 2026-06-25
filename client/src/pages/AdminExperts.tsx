@@ -46,14 +46,17 @@ export default function AdminExperts() {
   const [searchTerm, setSearchTerm] = useState(urlParams.get('search') || "");
   const [sectorFilter, setSectorFilter] = useState<string>(urlParams.get('sector') || "");
   const [functionFilter, setFunctionFilter] = useState<string>(urlParams.get('function') || "");
+  const [currentPage, setCurrentPage] = useState(parseInt(urlParams.get('page') || "1"));
+  const pageSize = 10;
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [expertToDelete, setExpertToDelete] = useState<{ id: number; name: string } | null>(null);
 
-  const updateUrl = (search: string, sector: string, func: string) => {
+  const updateUrl = (search: string, sector: string, func: string, page: number = 1) => {
     const params = new URLSearchParams();
     if (search) params.set('search', search);
     if (sector && sector !== "all") params.set('sector', sector);
     if (func && func !== "all") params.set('function', func);
+    if (page > 1) params.set('page', page.toString());
     const queryString = params.toString();
     navigate(`/admin/experts${queryString ? '?' + queryString : ''}`);
   };
@@ -62,11 +65,14 @@ export default function AdminExperts() {
     keyword: searchTerm || undefined,
     sector: (sectorFilter && sectorFilter !== "all") ? sectorFilter : undefined,
     function: (functionFilter && functionFilter !== "all") ? functionFilter : undefined,
+    limit: pageSize,
+    offset: (currentPage - 1) * pageSize,
   });
   const sectorsQuery = trpc.sectors.list.useQuery();
   const functionsQuery = trpc.functions.list.useQuery();
 
   const filteredExperts = expertsQuery.data || [];
+  const totalPages = Math.ceil((filteredExperts.length || 0) / pageSize);
   const createMutation = trpc.experts.create.useMutation();
   const updateMutation = trpc.experts.update.useMutation();
   const deleteMutation = trpc.experts.delete.useMutation();
@@ -216,13 +222,15 @@ export default function AdminExperts() {
               value={searchTerm}
               onChange={(e) => {
                 setSearchTerm(e.target.value);
-                updateUrl(e.target.value, sectorFilter, functionFilter);
+                setCurrentPage(1);
+                updateUrl(e.target.value, sectorFilter, functionFilter, 1);
               }}
               className="flex-1 min-w-0"
             />
             <Select value={sectorFilter} onValueChange={(value) => {
               setSectorFilter(value);
-              updateUrl(searchTerm, value, functionFilter);
+              setCurrentPage(1);
+              updateUrl(searchTerm, value, functionFilter, 1);
             }}>
               <SelectTrigger className="w-32">
                 <SelectValue placeholder="Sector" />
@@ -236,7 +244,8 @@ export default function AdminExperts() {
             </Select>
             <Select value={functionFilter} onValueChange={(value) => {
               setFunctionFilter(value);
-              updateUrl(searchTerm, sectorFilter, value);
+              setCurrentPage(1);
+              updateUrl(searchTerm, sectorFilter, value, 1);
             }}>
               <SelectTrigger className="w-32">
                 <SelectValue placeholder="Function" />
@@ -522,6 +531,39 @@ export default function AdminExperts() {
                 actionLabel={!searchTerm && !sectorFilter && !functionFilter ? "Add Expert" : undefined}
                 onAction={!searchTerm && !sectorFilter && !functionFilter ? () => setOpen(true) : undefined}
               />
+            </div>
+          )}
+          {filteredExperts.length > 0 && totalPages > 1 && (
+            <div className="px-5 py-3 border-t border-border flex items-center justify-between bg-muted/30">
+              <div className="text-sm text-muted-foreground">
+                Page {currentPage} of {totalPages}
+              </div>
+              <div className="flex gap-2">
+                <Button
+                  size="sm"
+                  variant="outline"
+                  disabled={currentPage <= 1}
+                  onClick={() => {
+                    const newPage = Math.max(1, currentPage - 1);
+                    setCurrentPage(newPage);
+                    updateUrl(searchTerm, sectorFilter, functionFilter, newPage);
+                  }}
+                >
+                  Previous
+                </Button>
+                <Button
+                  size="sm"
+                  variant="outline"
+                  disabled={currentPage >= totalPages}
+                  onClick={() => {
+                    const newPage = Math.min(totalPages, currentPage + 1);
+                    setCurrentPage(newPage);
+                    updateUrl(searchTerm, sectorFilter, functionFilter, newPage);
+                  }}
+                >
+                  Next
+                </Button>
+              </div>
             </div>
           )}
         </div>
