@@ -58,38 +58,63 @@ export const adminAuthRouter = router({
       // Input is already validated by Zod schema above
 
       try {
+        console.log(`[AdminAuth.login] Login attempt for email: ${input.email}`);
+
         // Auto-initialize default admin if none exists and credentials match defaults
         if (input.email === "admin@alternative.com" && input.password === "admin123") {
           const existingAdmin = await getAdminByEmail(input.email);
           if (!existingAdmin) {
             // Create default admin user on first login attempt
             console.log("[AdminAuth.login] Creating default admin user");
-            await createAdminUser(input.email, input.password, "Admin User", "super_admin");
+            try {
+              await createAdminUser(input.email, input.password, "Admin User", "super_admin");
+              console.log("[AdminAuth.login] Default admin user created successfully");
+            } catch (createError: any) {
+              console.error("[AdminAuth.login] Error creating default admin:", createError);
+              throw new TRPCError({
+                code: "INTERNAL_SERVER_ERROR",
+                message: "Failed to initialize admin user: " + createError.message,
+              });
+            }
           }
         }
 
         const admin = await verifyAdminPassword(input.email, input.password);
 
         if (!admin) {
+          console.log(`[AdminAuth.login] Authentication failed for ${input.email}`);
           throw new TRPCError({
             code: "UNAUTHORIZED",
             message: "Invalid email or password",
           });
         }
 
+        console.log(`[AdminAuth.login] Authentication successful for ${input.email}`);
+
         // Update last login
-        await updateAdminLastLogin(admin.id);
+        try {
+          await updateAdminLastLogin(admin.id);
+        } catch (e) {
+          console.warn("[AdminAuth.login] Failed to update last login:", e);
+        }
 
         // Generate JWT token
+        const secret = ENV.JWT_SECRET || "your-secret-key";
+        if (secret === "your-secret-key") {
+          console.warn("[AdminAuth.login] WARNING: Using default JWT_SECRET. Set JWT_SECRET environment variable in production!");
+        }
+
         const token = jwt.sign(
           {
             adminId: admin.id,
             email: admin.email,
             role: admin.role,
           },
-          ENV.JWT_SECRET || "your-secret-key",
+          secret,
           { expiresIn: "7d" }
         );
+
+        console.log(`[AdminAuth.login] JWT token generated for ${input.email}`);
 
         return {
           success: true,
@@ -102,13 +127,13 @@ export const adminAuthRouter = router({
           },
         };
       } catch (error: any) {
-        console.error("[AdminAuth.login]Error during login:", error);
-        if (error.code === "UNAUTHORIZED") {
+        console.error("[AdminAuth.login] Error during login:", error);
+        if (error.code === "UNAUTHORIZED" || error.code === "INTERNAL_SERVER_ERROR") {
           throw error;
         }
         throw new TRPCError({
           code: "INTERNAL_SERVER_ERROR",
-          message: "Login failed",
+          message: error.message || "Login failed",
         });
       }
     }),
