@@ -400,6 +400,71 @@ export const appRouter = router({
             });
             console.log(`[submitProfile] Created new expert`);
           }
+
+          // Send T&C copy to the expert
+          try {
+            const { sendEmail } = await import("./email");
+            const pdfPath = join(process.cwd(), "public", "documents", "alteratives-tnc.pdf");
+            const pdfBuffer = readFileSync(pdfPath);
+            const pdfBase64 = pdfBuffer.toString("base64");
+
+            await sendEmail({
+              to: input.email,
+              subject: "AlterNatives — Your Terms & Conditions Copy",
+              html: `
+                <div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto">
+                  <div style="background:#0F172A;padding:20px 24px;border-radius:8px 8px 0 0">
+                    <h2 style="color:#fff;margin:0;font-size:18px">Welcome to AlterNatives</h2>
+                  </div>
+                  <div style="padding:24px;border:1px solid #e2e8f0;border-top:none;border-radius:0 0 8px 8px">
+                    <p style="color:#333">Hi ${input.firstName || "there"},</p>
+                    <p style="color:#555">Thank you for joining the AlterNatives Expert Network. Your profile has been successfully submitted.</p>
+                    <p style="color:#555">Please find attached a copy of the Terms &amp; Conditions you accepted during registration.</p>
+                    <p style="color:#555;font-size:13px">Our team will review your profile and be in touch within 24 hours.</p>
+                    <p style="color:#888;font-size:12px;margin-top:24px">© ${new Date().getFullYear()} AlterNatives · nativeworld.com</p>
+                  </div>
+                </div>`,
+              attachments: [
+                {
+                  name: "AlterNatives-Terms-and-Conditions.pdf",
+                  content: pdfBase64,
+                },
+              ],
+            });
+          } catch (tcMailErr) {
+            console.warn("[submitProfile] T&C email to expert failed:", tcMailErr);
+          }
+
+          // Notify admin of new expert registration
+          try {
+            const { sendEmail } = await import("./email");
+            await sendEmail({
+              to: "alternatives@nativeworld.com",
+              subject: `New Expert Registration — ${input.firstName || ""} ${input.lastName || ""}`.trim(),
+              html: `
+                <div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto">
+                  <div style="background:#0F172A;padding:20px 24px;border-radius:8px 8px 0 0">
+                    <h2 style="color:#fff;margin:0;font-size:18px">New Expert Registered</h2>
+                  </div>
+                  <div style="padding:24px;border:1px solid #e2e8f0;border-top:none;border-radius:0 0 8px 8px">
+                    <table style="width:100%;border-collapse:collapse">
+                      <tr><td style="padding:8px 0;color:#555;width:140px">Name</td><td style="font-weight:600">${input.firstName || ""} ${input.lastName || ""}</td></tr>
+                      <tr><td style="padding:8px 0;color:#555">Email</td><td style="font-weight:600">${input.email}</td></tr>
+                      ${input.phone ? `<tr><td style="padding:8px 0;color:#555">Phone</td><td>${input.phone}</td></tr>` : ""}
+                      ${input.sector ? `<tr><td style="padding:8px 0;color:#555">Sector</td><td>${input.sector}</td></tr>` : ""}
+                      ${input.function ? `<tr><td style="padding:8px 0;color:#555">Function</td><td>${input.function}</td></tr>` : ""}
+                      ${input.linkedinUrl ? `<tr><td style="padding:8px 0;color:#555">LinkedIn</td><td><a href="${input.linkedinUrl}">${input.linkedinUrl}</a></td></tr>` : ""}
+                    </table>
+                    <div style="margin-top:20px">
+                      <a href="https://alternativesexperts.com/admin/experts" style="display:inline-block;padding:10px 20px;background:#2563EB;color:#fff;text-decoration:none;border-radius:6px;font-weight:600">View in Admin</a>
+                    </div>
+                  </div>
+                </div>`,
+            });
+          } catch (mailErr) {
+            console.warn("[submitProfile] Admin notification email failed:", mailErr);
+          }
+
           return { success: true };
         } catch (error) {
           console.error(`[submitProfile] Error:`, error instanceof Error ? error.message : error);
@@ -726,6 +791,114 @@ export const appRouter = router({
         return getShortlistByProjectAndExpert(input.projectId, input.expertId);
       }),
 
+    generateQuestionnaireEmailDraft: adminProcedure
+      .input(z.object({ shortlistId: z.number() }))
+      .query(async ({ input }) => {
+        try {
+          const shortlist = await getShortlistById(input.shortlistId);
+          if (!shortlist) throw new Error("Shortlist not found");
+
+          const q = await getQuestionnaireByProject(shortlist.projectId);
+          if (!q) throw new Error("No questionnaire created for this project. Please create one first.");
+
+          const expert = await getExpertById(shortlist.expertId);
+          if (!expert) throw new Error("Expert not found");
+
+          const project = await getProjectById(shortlist.projectId);
+
+          // Create unique per-expert invitation
+          const invitation = await createOrGetInvitation({
+            questionnaireId: q.id,
+            expertId: shortlist.expertId,
+            shortlistId: shortlist.id,
+          });
+
+          const link = `${process.env.APP_ORIGIN || 'https://alternativesexperts.com'}/questionnaire/${invitation.token}`;
+
+          return {
+            expertEmail: expert.email,
+            expertName: expert.firstName,
+            projectName: project?.name || 'a project',
+            questionnaireLink: link,
+            subject: `${expert.firstName}, You're invited to complete a questionnaire`,
+            body: `Hi ${expert.firstName},\n\nYou have been invited to complete a questionnaire for ${project?.name || 'a project'}.\n\nPlease click the link below to complete the questionnaire:\n\n${link}`,
+            htmlBody: `<div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto">
+              <p>Hi ${expert.firstName},</p>
+              <p>You have been invited to complete a questionnaire for <strong>${project?.name || 'a project'}</strong>.</p>
+              <p><a href="${link}" style="display:inline-block;padding:12px 28px;background:#2563EB;color:white;text-decoration:none;border-radius:6px;font-weight:600">Complete Questionnaire</a></p>
+              <p style="color:#888;font-size:12px;margin-top:24px">© ${new Date().getFullYear()} AlterNatives</p>
+            </div>`,
+          };
+        } catch (error) {
+          const message = error instanceof Error ? error.message : "Failed to generate email draft";
+          throw new Error(message);
+        }
+      }),
+
+    sendQuestionnaireEmailAndUpdateStatus: adminProcedure
+      .input(
+        z.object({
+          shortlistId: z.number(),
+          subject: z.string(),
+          htmlBody: z.string(),
+          textBody: z.string(),
+          updateOtherFields: z.object({
+            consultantInChargeId: z.number().optional(),
+            notes: z.string().optional(),
+          }).optional(),
+        })
+      )
+      .mutation(async ({ input }) => {
+        const { sendEmail } = await import("./email");
+
+        const shortlist = await getShortlistById(input.shortlistId);
+        if (!shortlist) throw new Error("Shortlist not found");
+
+        const expert = await getExpertById(shortlist.expertId);
+        if (!expert?.email) throw new Error("Expert not found");
+
+        const q = await getQuestionnaireByProject(shortlist.projectId);
+        if (!q) throw new Error("No questionnaire for this project");
+
+        // Create FRESH invitation token (delete old ones, create new)
+        const invitation = await createFreshInvitation({
+          questionnaireId: q.id,
+          expertId: shortlist.expertId,
+          shortlistId: shortlist.id,
+        });
+
+        if (!invitation?.token) throw new Error("Failed to create invitation");
+
+        // Replace the questionnaire link in the email with the actual invitation token
+        const appOrigin = process.env.APP_ORIGIN || 'https://alternativesexperts.com';
+        const invitationLink = `${appOrigin}/questionnaire/${invitation.token}`;
+        const updatedHtmlBody = input.htmlBody.replace(
+          /https:\/\/[^\s"<>]+\/questionnaire\/[a-z0-9]+/g,
+          invitationLink
+        );
+        const updatedTextBody = input.textBody.replace(
+          /https:\/\/[^\s]+\/questionnaire\/[a-z0-9]+/g,
+          invitationLink
+        );
+
+        // Send email with both HTML and text content
+        await sendEmail({
+          to: expert.email,
+          subject: input.subject,
+          html: updatedHtmlBody,
+          text: updatedTextBody,
+        });
+
+        // Update status to invited
+        await updateShortlist(input.shortlistId, {
+          status: "invited",
+          consultantInChargeId: input.updateOtherFields?.consultantInChargeId,
+          notes: input.updateOtherFields?.notes,
+        });
+
+        return { success: true };
+      }),
+
     update: adminProcedure
       .input(
         z.object({
@@ -917,7 +1090,7 @@ export const appRouter = router({
 
             // Send verification email
             try {
-              const appUrl = (process.env.APP_URL || 'https://alternatives.nativeworld.com').replace(/\/$/, '');
+              const appUrl = (process.env.APP_URL || 'https://alternativesexperts.com').replace(/\/$/, '');
               // Use full token for URL, numeric code for manual entry
               const verificationUrl = `${appUrl}/verify-email?token=${fullToken}`;
 

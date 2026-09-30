@@ -31,7 +31,7 @@ export default function AdminLeads() {
         <div>
           <h1 className="page-title">Leads</h1>
           <p className="page-subtitle">
-            {leads.length} submission{leads.length !== 1 ? "s" : ""} via alternatives.nativeworld.com/connect
+            {leads.length} submission{leads.length !== 1 ? "s" : ""} via alternativesexperts.com/connect
           </p>
         </div>
       </div>

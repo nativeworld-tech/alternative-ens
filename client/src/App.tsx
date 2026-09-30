@@ -25,6 +25,7 @@ import ExpertProfileView from "./pages/ExpertProfileView";
 import AdminLogin from "./pages/AdminLogin";
 import AdminLeads from "./pages/AdminLeads";
 import ConnectPage from "./pages/ConnectPage";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
 import ConnectThankYou from "./pages/ConnectThankYou";
 import TestPDF from "./pages/test-pdf";
 
@@ -48,6 +49,7 @@ function Router() {
       <Route path={"/admin/add-expert"} component={AddExpert} />
       <Route path={"/admin/add-project"} component={AddProject} />
       <Route path={"/connect"} component={ConnectPage} />
+      <Route path={"/privacy-policy"} component={PrivacyPolicy} />
       <Route path={"/connect/thank-you"} component={ConnectThankYou} />
       <Route path={"/admin/leads"} component={AdminLeads} />
       <Route path={"/expert/register"} component={ExpertPortal} />

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<script src="https://unpkg.com/d3@7.9.0/dist/d3.min.js" integrity="sha384-CjloA8y00+1SDAUkjs099PVfnY2KmDC2BZnws9kh8D/lX1s46w6EPhpXdqMfjK6i" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/topojson-client@3.1.0/dist/topojson-client.min.js" integrity="sha384-Ukv1p/xTma6P4/2bY5KzWBw+ydSpXmhCMtyciIQVDJ1RmOxtCYNMF1uXT9T63H67" crossorigin="anonymous"></script>
+<style>
+  html, body { margin: 0; background: #ffffff; font-family: Inter, system-ui, sans-serif; overflow: hidden; }
+  #map { width: 100vw; height: 100vh; }
+  .land { fill: #f2f2f7; stroke: #e2e2ea; stroke-width: .6; transition: fill .25s ease; }
+  .land.lit { fill: #ecebff; }
+  .hub { fill: #4d4cff; cursor: pointer; }
+  .halo { fill: none; stroke: #4d4cff; }
+  #tip { position: fixed; pointer-events: none; opacity: 0; transition: opacity .15s ease;
+    background: #3e3e40; color: #fff; font-size: 12px; padding: 6px 10px; white-space: nowrap; transform: translate(-50%, -140%); }
+</style>
+</head>
+<body>
+<div id="map"></div>
+<div id="tip"></div>
+<script>
+const HUBS = [
+  ["Mumbai", 72.87, 19.07, 1], ["Bengaluru", 77.59, 12.97, 1], ["Delhi NCR", 77.10, 28.70, 1],
+  ["Singapore", 103.82, 1.35, 1], ["Dubai", 55.27, 25.20, 1], ["London", -0.13, 51.51, 1],
+  ["New York", -74.01, 40.71, 1], ["San Francisco", -122.42, 37.77, 0], ["Hong Kong", 114.17, 22.32, 0],
+  ["Tokyo", 139.69, 35.69, 0], ["Sydney", 151.21, -33.87, 0], ["Frankfurt", 8.68, 50.11, 0],
+  ["São Paulo", -46.63, -23.55, 0], ["Toronto", -79.38, 43.65, 0], ["Johannesburg", 28.05, -26.20, 0],
+  ["Riyadh", 46.72, 24.71, 0], ["Seoul", 126.98, 37.57, 0], ["Jakarta", 106.85, -6.21, 0],
+  ["Amsterdam", 4.90, 52.37, 0], ["Shanghai", 121.47, 31.23, 0]
+];
+const LIT = new Set(["India","United States of America","United Kingdom","Singapore","United Arab Emirates","China","Japan","Australia","Germany","Brazil","Canada","South Africa","Saudi Arabia","South Korea","Indonesia","Netherlands","France","Switzerland","Malaysia","Vietnam"]);
+
+const el = document.getElementById('map'), tip = document.getElementById('tip');
+let w = el.clientWidth, h = el.clientHeight;
+const svg = d3.select('#map').append('svg').attr('width', w).attr('height', h);
+const proj = d3.geoNaturalEarth1().fitSize([w, h * 1.18], { type: "Sphere" }).translate([w / 2, h / 2]);
+const path = d3.geoPath(proj);
+
+d3.json('https://cdn.jsdelivr.net/npm/world-atlas@2.0.2/countries-110m.json').then(topo => {
+  const feats = topojson.feature(topo, topo.objects.countries).features;
+  svg.append('g').selectAll('path').data(feats).join('path')
+    .attr('d', path)
+    .attr('class', d => 'land' + (LIT.has(d.properties.name) ? ' lit' : ''));
+
+  const g = svg.append('g');
+  HUBS.forEach(([name, lon, lat, major], i) => {
+    const p = proj([lon, lat]); if (!p) return;
+    const r = major ? 4.5 : 3;
+    const halo = g.append('circle').attr('class', 'halo').attr('cx', p[0]).attr('cy', p[1]).attr('r', r);
+    (function pulse() {
+      halo.attr('r', r).attr('stroke-opacity', .55).attr('stroke-width', 1.2)
+        .transition().delay(i * 260 % 3200).duration(2200).ease(d3.easeCubicOut)
+        .attr('r', r + (major ? 26 : 16)).attr('stroke-opacity', 0).on('end', pulse);
+    })();
+    g.append('circle').attr('class', 'hub').attr('cx', p[0]).attr('cy', p[1]).attr('r', r)
+      .attr('fill-opacity', major ? 1 : .6)
+      .on('mouseenter', (ev) => { tip.textContent = name; tip.style.opacity = 1;
+        tip.style.left = ev.clientX + 'px'; tip.style.top = ev.clientY + 'px'; })
+      .on('mouseleave', () => { tip.style.opacity = 0; });
+  });
+});
+</script>
+</body>
+</html>

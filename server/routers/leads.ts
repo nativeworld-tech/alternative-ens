@@ -117,7 +117,7 @@ export const leadsRouter = router({
       ` : ""}
     </div>
     <div class="footer">
-      This is an automated notification from alternatives.nativeworld.com/connect
+      This is an automated notification from alternativesexperts.com/connect
     </div>
   </div>
 </body>

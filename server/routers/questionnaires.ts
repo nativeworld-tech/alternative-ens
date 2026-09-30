@@ -169,7 +169,7 @@ export const questionnairesRouter = router({
 
       // Notify admin and consultant
       try {
-        const appUrl = (ENV as any).appUrl || "https://alternatives.nativeworld.com";
+        const appUrl = (ENV as any).appUrl || "https://alternativesexperts.com";
         const { questionnaire: q, expert, project } = result;
         const answerRows = q.questions
           .map((qs: any) => {
@@ -308,7 +308,7 @@ export const questionnairesRouter = router({
 
       // Notify admin (original behavior)
       try {
-        const appUrl = (ENV as any).appUrl || "https://alternatives.nativeworld.com";
+        const appUrl = (ENV as any).appUrl || "https://alternativesexperts.com";
         const answerRows = q.questions
           .map((qs: any) => {
             const ans = input.answers[String(qs.id)];
