@@ -29,6 +29,7 @@ const C = {
 const NAV_LINKS = [
   { href: "#offerings", label: "Offerings" },
   { href: "#clients", label: "Client Types" },
+  { href: "#cases", label: "Case Studies" },
   { href: "#compliance", label: "Compliance" },
   { href: "#signup", label: "Expert Sign-Up" },
   { href: "#careers", label: "Careers" },
@@ -73,6 +74,9 @@ const SHOWCASE = [
 const CLIENT_TYPES = [
   {
     roman: "i",
+    numeral: "01",
+    headerBg: "linear-gradient(135deg, #3a39e6 0%, #4d4cff 60%, #6f6eff 100%)",
+    headerPattern: "network" as const,
     title: "Private Equity & Venture Capital",
     points: [
       "Support commercial due diligence and investment evaluations",
@@ -85,6 +89,9 @@ const CLIENT_TYPES = [
   },
   {
     roman: "ii",
+    numeral: "02",
+    headerBg: "#ffffff",
+    headerPattern: "dots" as const,
     title: "Consulting Firms",
     points: [
       "Connect project teams with industry and functional experts",
@@ -96,6 +103,9 @@ const CLIENT_TYPES = [
   },
   {
     roman: "iii",
+    numeral: "03",
+    headerBg: "#26273a",
+    headerPattern: "bars" as const,
     title: "Corporates & Enterprises",
     points: [
       "Support strategic planning and business transformation",
@@ -115,7 +125,439 @@ const SECTORS = [
   { name: "Consumer", tags: ["Internet Brands", "Media, Entertainment and Telecom", "FMCG", "Apparel and Fashion", "Retail", "Food and Restaurants", "Consumer Durables", "Travel and Tourism"], img: "/landing/assets/sector-consumer.jpg" },
 ];
 
-const MARQUEE_ITEMS = ["Pharmaceuticals & Healthcare", "Tech", "Financial Services", "Industrials", "Consumer", "Commercial Due Diligence", "Portfolio Value Creation", "Corporate Governance", "Market Intelligence"];
+const REGION_MARQUEE = [
+  { count: "1,00,000+", region: "India" },
+  { count: "75,000+", region: "USA" },
+  { count: "40,000+", region: "Europe" },
+  { count: "10,000+", region: "Middle East" },
+  { count: "10,000+", region: "Southeast Asia" },
+  { count: "8,000+", region: "China & East Asia" },
+  { count: "4,000+", region: "Australia & NZ" },
+  { count: "2,000+", region: "Latin America" },
+  { count: "1,000+", region: "Africa" },
+];
+
+type CaseStudy = {
+  badge: string;
+  subIndustry: string;
+  headline: string;
+  sector: string;
+  scope: string;
+  duration: string;
+  overview: string[];
+  quote: string;
+  experts: { initials: string; title: string; company: string }[];
+  tags: string[];
+};
+
+const CASE_SECTORS = ["Healthcare", "Tech", "Financial Services", "Industrials", "Consumer"];
+
+const CASE_STUDIES: CaseStudy[][] = [
+  // Healthcare
+  [
+    {
+      badge: "Advisor Connect",
+      subIndustry: "Medical Devices",
+      headline: "Alternatives supported a leading private equity firm in identifying European advisors with expertise in minimally invasive valve replacement procedures for one of its life sciences portfolio companies.",
+      sector: "Medical Devices",
+      scope: "Fractional Consultant",
+      duration: "4 weeks",
+      overview: [
+        "Alternatives leveraged its life sciences network to identify a seasoned leader in the interventional cardiology space.",
+        "The advisor brought over 30 years of life sciences experience, having led commercialization efforts across a range of heart valve technologies.",
+      ],
+      quote: "Alternatives helped the client identify an advisor to guide their interventional cardiology strategy.",
+      experts: [
+        { initials: "EL", title: "Ex. BU-Director", company: "Edwards Lifesciences" },
+        { initials: "M", title: "Ex. VP Commercial", company: "Medtronic" },
+        { initials: "BS", title: "Ex. VP Strategy", company: "Boston Scientific" },
+      ],
+      tags: ["Operating Advisors", "Fractional Consultants", "Deal Advisors"],
+    },
+    {
+      badge: "Expert Consultations",
+      subIndustry: "Pharmaceuticals",
+      headline: "Alternatives supported a global strategy consulting firm in assessing market access pathways for a novel oncology therapy across key Southeast Asian markets.",
+      sector: "Pharmaceuticals",
+      scope: "Expert Consultations",
+      duration: "60 mins",
+      overview: [
+        "Alternatives connected the project team with former market access, pricing, and medical affairs leaders who had launched oncology products in Singapore, Thailand, Malaysia, and Vietnam.",
+        "The experts shared insights on reimbursement timelines, hospital formulary listing, tender dynamics, and patient assistance programmes.",
+      ],
+      quote: "Alternatives helped the client build a country-by-country launch sequencing plan grounded in practitioner insight.",
+      experts: [
+        { initials: "R", title: "Ex. Head of Market Access, SEA", company: "Roche" },
+        { initials: "A", title: "Ex. Oncology Business Unit Head", company: "AstraZeneca" },
+        { initials: "N", title: "Ex. Regional Pricing Director", company: "Novartis" },
+      ],
+      tags: ["Expert Consultations", "Quick Insights", "Market Research"],
+    },
+    {
+      badge: "Interim & Fractional",
+      subIndustry: "Hospitals",
+      headline: "Alternatives supported a PE-backed multi-specialty hospital chain in placing an interim Chief Operating Officer to lead its expansion into Tier-2 cities in India.",
+      sector: "Hospitals",
+      scope: "Interim COO",
+      duration: "6 months",
+      overview: [
+        "Alternatives screened senior hospital operators with experience in greenfield commissioning, clinical talent acquisition, and payer empanelment.",
+        "The placed executive brought over two decades of hospital operations experience and had previously led the launch of multiple facilities across North and West India.",
+      ],
+      quote: "Alternatives helped the client commission two new facilities on schedule while a permanent COO search was completed.",
+      experts: [
+        { initials: "FH", title: "Ex. Regional COO", company: "Fortis Healthcare" },
+        { initials: "MH", title: "Ex. Cluster Head, Operations", company: "Manipal Hospitals" },
+        { initials: "MH", title: "Ex. Director, New Facilities", company: "Max Healthcare" },
+      ],
+      tags: ["Interim Leadership", "Fractional Executives", "Transformation"],
+    },
+    {
+      badge: "Surveys",
+      subIndustry: "Diagnostics",
+      headline: "Alternatives supported an investment firm in surveying pathologists and lab directors to gauge adoption of digital pathology platforms across India and the Middle East.",
+      sector: "Diagnostics",
+      scope: "Quantitative Survey",
+      duration: "3 weeks, 120+ respondents",
+      overview: [
+        "Alternatives fielded a structured survey among practicing pathologists and diagnostics procurement leaders to size near-term appetite for digital pathology and AI-assisted reads.",
+        "Responses covered budget ownership, vendor shortlists, and rollout timelines across hospital and standalone-lab settings.",
+      ],
+      quote: "Alternatives helped the client size near-term demand and validate its investment thesis.",
+      experts: [
+        { initials: "DL", title: "Ex. Lab Director", company: "Dr Lal PathLabs" },
+        { initials: "AD", title: "Ex. Head of Pathology", company: "Aster DM Healthcare" },
+        { initials: "MH", title: "Ex. Procurement Head, Diagnostics", company: "Metropolis Healthcare" },
+      ],
+      tags: ["Quantitative Surveys", "Market Sentiment", "Benchmarking"],
+    },
+  ],
+  // Tech
+  [
+    {
+      badge: "Expert Consultations",
+      subIndustry: "IT Services",
+      headline: "Alternatives supported a private equity-owned IT services portfolio company in benchmarking sales structures and compensation design against global peers.",
+      sector: "IT Services",
+      scope: "Expert Consultations",
+      duration: "60 mins",
+      overview: [
+        "Alternatives connected the client with senior sales and client-management leaders from comparable global services and BPO organizations.",
+        "Conversations covered account coverage models, quota design, and variable-pay structures for enterprise sales teams.",
+      ],
+      quote: "Alternatives helped the client redesign its sales compensation framework using proven peer benchmarks.",
+      experts: [
+        { initials: "GC", title: "Chief Client Officer", company: "Global CX & BPO firm" },
+        { initials: "GP", title: "EVP Global Sales", company: "Global Professional Services Firm" },
+        { initials: "GS", title: "SVP Sales", company: "Global Software Engineering firm" },
+        { initials: "DA", title: "VP Sales", company: "Data Analytics & AI firm" },
+      ],
+      tags: ["Expert Consultations", "Quick Insights", "Market Research"],
+    },
+    {
+      badge: "Surveys",
+      subIndustry: "Cybersecurity",
+      headline: "Alternatives supported a growth equity investor in surveying CISOs on budget allocation and vendor consolidation trends across the US and Europe.",
+      sector: "Cybersecurity",
+      scope: "Quantitative Survey",
+      duration: "2 weeks, 150+ respondents",
+      overview: [
+        "Alternatives surveyed security leaders on spend priorities, tool sprawl, and consolidation intentions across identity, endpoint, and cloud security categories.",
+        "Findings were segmented by company size and industry to support the investor's category thesis.",
+      ],
+      quote: "Alternatives helped the client validate where CISO budgets are consolidating over the next 12 months.",
+      experts: [
+        { initials: "GR", title: "Ex. CISO", company: "Global Retail Bank" },
+        { initials: "FM", title: "Ex. VP Security Architecture", company: "Fortune 500 Manufacturer" },
+        { initials: "ET", title: "Ex. Head of IT Procurement", company: "European Telecom Operator" },
+      ],
+      tags: ["Quantitative Surveys", "Market Sentiment", "Benchmarking"],
+    },
+    {
+      badge: "Interim & Fractional",
+      subIndustry: "SaaS",
+      headline: "Alternatives placed a fractional Chief Revenue Officer at a vertical SaaS company to lead its US mid-market expansion.",
+      sector: "SaaS",
+      scope: "Fractional CRO",
+      duration: "9 months",
+      overview: [
+        "Alternatives identified a fractional CRO with direct experience scaling mid-market SaaS go-to-market motions in North America.",
+        "The advisor rebuilt the pipeline model, hired the first US-based AEs, and set the pricing and packaging strategy for the segment.",
+      ],
+      quote: "Alternatives helped the client stand up a repeatable US mid-market motion within two quarters.",
+      experts: [
+        { initials: "F", title: "Ex. CRO", company: "Freshworks" },
+        { initials: "Z", title: "Ex. VP Sales, NA", company: "Zoho" },
+        { initials: "C", title: "Ex. Head of RevOps", company: "Chargebee" },
+      ],
+      tags: ["Interim Leadership", "Fractional Executives", "Transformation"],
+    },
+    {
+      badge: "Expert Consultations",
+      subIndustry: "Data Centers",
+      headline: "Alternatives supported an infrastructure fund in evaluating power availability and hyperscaler demand across India and Southeast Asia.",
+      sector: "Data Centers",
+      scope: "Expert Consultations",
+      duration: "60 mins",
+      overview: [
+        "Alternatives connected the fund with data center site-selection and development leaders who had recently commissioned capacity in the region.",
+        "Conversations covered power procurement timelines, land availability, and hyperscaler leasing terms.",
+      ],
+      quote: "Alternatives helped the client stress-test its capacity growth assumptions ahead of investment committee.",
+      experts: [
+        { initials: "GH", title: "Ex. Head of Site Selection, APAC", company: "Global Hyperscaler" },
+        { initials: "ST", title: "Ex. VP Development", company: "ST Telemedia GDC" },
+        { initials: "E", title: "Ex. Director Energy Procurement", company: "Equinix" },
+      ],
+      tags: ["Expert Consultations", "Quick Insights", "Market Research"],
+    },
+  ],
+  // Financial Services
+  [
+    {
+      badge: "Expert Consultations",
+      subIndustry: "Treasury",
+      headline: "Alternatives supported a private equity firm in assessing treasury modernization opportunities at a public sector bank.",
+      sector: "Treasury",
+      scope: "Expert Consultations",
+      duration: "60 mins",
+      overview: [
+        "Alternatives connected the client with senior treasury and global markets operations leaders from comparable banks.",
+        "Discussions covered core treasury system upgrades, straight-through processing gaps, and vendor landscape for PSU banks.",
+      ],
+      quote: "Alternatives helped the client shape its technology diligence questions ahead of a bid.",
+      experts: [
+        { initials: "H", title: "SVP Head Treasury Ops", company: "HDFC" },
+        { initials: "BP", title: "Director, Head Global Markets & ALM Treasury Ops", company: "BNP Paribas" },
+        { initials: "YB", title: "Country Head Trade Operations", company: "Yes Bank" },
+      ],
+      tags: ["Expert Consultations", "Quick Insights", "Market Research"],
+    },
+    {
+      badge: "Advisor Connect",
+      subIndustry: "Investment Management",
+      headline: "Alternatives supported a private equity firm in mapping the investment management technology landscape in India.",
+      sector: "Investment Management",
+      scope: "Treasury Operations Consultant",
+      duration: "4 weeks",
+      overview: [
+        "Alternatives placed a fractional consultant to map front, middle, and back-office technology vendors used by Indian asset managers.",
+        "The engagement produced a landscape view of build-vs-buy decisions and switching costs across the category.",
+      ],
+      quote: "Alternatives helped the client build conviction on where technology spend is heading in Indian asset management.",
+      experts: [
+        { initials: "SM", title: "Sr VP & CIO", company: "SBI Mutual Fund" },
+        { initials: "WC", title: "Executive Director & CTO", company: "WhiteOak Capital" },
+        { initials: "CF", title: "CTO", company: "Credila Financial Services Ltd" },
+      ],
+      tags: ["Operating Advisors", "Fractional Consultants", "Deal Advisors"],
+    },
+    {
+      badge: "Independent Directors",
+      subIndustry: "NBFC",
+      headline: "Alternatives supported a PE-backed NBFC in appointing an independent director ahead of its planned IPO.",
+      sector: "NBFC",
+      scope: "Independent Director Placement",
+      duration: "8 weeks",
+      overview: [
+        "Alternatives ran a targeted search for candidates with credit risk and regulatory experience relevant to an IPO-track NBFC.",
+        "The shortlist was screened for independence, board availability, and audit-committee readiness.",
+      ],
+      quote: "Alternatives helped the client strengthen its board ahead of listing scrutiny.",
+      experts: [
+        { initials: "IB", title: "Ex. CRO", company: "ICICI Bank" },
+        { initials: "RB", title: "Ex. Executive Director", company: "RBI" },
+        { initials: "SB", title: "Ex. Deputy MD", company: "State Bank of India" },
+      ],
+      tags: ["Board Search", "Governance", "Independent Directors"],
+    },
+    {
+      badge: "Surveys",
+      subIndustry: "Payments",
+      headline: "Alternatives supported a consulting firm in surveying merchants on digital payment acceptance trends across Indian cities.",
+      sector: "Payments",
+      scope: "Quantitative Survey",
+      duration: "3 weeks, 300+ respondents",
+      overview: [
+        "Alternatives surveyed small and mid-sized merchants on acceptance costs, settlement speed, and preferred payment rails.",
+        "The dataset was cut by city tier and merchant category to support the client's go-to-market recommendations.",
+      ],
+      quote: "Alternatives helped the client quantify where UPI and card acceptance friction remains highest.",
+      experts: [
+        { initials: "P", title: "Ex. Head Merchant Acquiring", company: "Paytm" },
+        { initials: "P", title: "Ex. VP Merchant Lending", company: "PhonePe" },
+        { initials: "R", title: "Ex. Director SME Payments", company: "Razorpay" },
+      ],
+      tags: ["Quantitative Surveys", "Market Sentiment", "Benchmarking"],
+    },
+  ],
+  // Industrials
+  [
+    {
+      badge: "Expert Consultations",
+      subIndustry: "Lubricants",
+      headline: "Alternatives supported a market research firm in benchmarking agricultural-equipment lubricant suppliers across Southeast Asia and India.",
+      sector: "Lubricants",
+      scope: "Expert Consultations",
+      duration: "60 mins",
+      overview: [
+        "Alternatives connected the client with OEM procurement and national sales leaders across four lubricant brands and geographies.",
+        "Conversations covered channel margins, OEM approval cycles, and competitive positioning by brand.",
+      ],
+      quote: "Alternatives helped the client build a country-by-country competitive map for its client.",
+      experts: [
+        { initials: "P", title: "National OEM Manager, India", company: "Petronas" },
+        { initials: "K", title: "Procurement Head, Myanmar", company: "Kubota" },
+        { initials: "C", title: "National Sales Head, Vietnam", company: "Castrol" },
+        { initials: "V", title: "Senior GM, India", company: "Veedol" },
+      ],
+      tags: ["Expert Consultations", "Quick Insights", "Market Research"],
+    },
+    {
+      badge: "Expert Consultations",
+      subIndustry: "Auto Components",
+      headline: "Alternatives supported a private equity firm in assessing the impact of the EV shift on powertrain component demand.",
+      sector: "Auto Components",
+      scope: "Expert Consultations",
+      duration: "60 mins",
+      overview: [
+        "Alternatives connected the client with OEM procurement and product planning leaders across passenger and two-wheeler segments.",
+        "Discussions covered component-level content shifts as OEMs transition powertrain mix toward electric platforms.",
+      ],
+      quote: "Alternatives helped the client size which component categories face the steepest demand decline.",
+      experts: [
+        { initials: "TM", title: "Ex. Head of Procurement", company: "Tata Motors" },
+        { initials: "BA", title: "Ex. VP Product Planning", company: "Bajaj Auto" },
+        { initials: "ME", title: "Ex. Director EV Engineering", company: "Mahindra Electric" },
+      ],
+      tags: ["Expert Consultations", "Quick Insights", "Market Research"],
+    },
+    {
+      badge: "Interim & Fractional",
+      subIndustry: "Specialty Chemicals",
+      headline: "Alternatives placed an interim Chief Financial Officer at a specialty chemicals business during a carve-out from its parent group.",
+      sector: "Specialty Chemicals",
+      scope: "Interim CFO",
+      duration: "5 months",
+      overview: [
+        "Alternatives identified an interim CFO with direct carve-out and standalone-finance-function experience in the chemicals sector.",
+        "The advisor built the standalone finance stack, closed the first independent audit, and supported lender negotiations.",
+      ],
+      quote: "Alternatives helped the client complete the carve-out finance workstream on schedule.",
+      experts: [
+        { initials: "AI", title: "Ex. CFO", company: "Aarti Industries" },
+        { initials: "BI", title: "Ex. VP Finance, Carve-outs", company: "BASF India" },
+        { initials: "SL", title: "Ex. Group Controller", company: "SRF Limited" },
+      ],
+      tags: ["Interim Leadership", "Fractional Executives", "Transformation"],
+    },
+    {
+      badge: "Surveys",
+      subIndustry: "Logistics",
+      headline: "Alternatives supported an investment firm in surveying supply chain heads on warehousing and third-party logistics adoption.",
+      sector: "Logistics",
+      scope: "Quantitative Survey",
+      duration: "3 weeks, 200+ respondents",
+      overview: [
+        "Alternatives surveyed supply chain and logistics heads on 3PL spend, warehouse automation adoption, and switching intent.",
+        "The results informed the investor's view of consolidation opportunities in the 3PL space.",
+      ],
+      quote: "Alternatives helped the client validate demand for automated warehousing at scale.",
+      experts: [
+        { initials: "AP", title: "Ex. Head of Supply Chain", company: "Asian Paints" },
+        { initials: "F", title: "Ex. VP Warehousing", company: "Flipkart" },
+        { initials: "NI", title: "Ex. Director Logistics Procurement", company: "Nestlé India" },
+      ],
+      tags: ["Quantitative Surveys", "Market Sentiment", "Benchmarking"],
+    },
+  ],
+  // Consumer
+  [
+    {
+      badge: "Expert Consultations",
+      subIndustry: "Beauty & Personal Care",
+      headline: "Alternatives supported a private equity firm in evaluating a D2C beauty investment thesis ahead of a growth-round decision.",
+      sector: "Beauty & Personal Care",
+      scope: "Expert Consultations",
+      duration: "60 mins",
+      overview: [
+        "Alternatives connected the client with category and growth-marketing leaders who had scaled comparable D2C beauty brands.",
+        "Discussions covered customer acquisition economics, retention curves, and offline expansion playbooks.",
+      ],
+      quote: "Alternatives helped the client pressure-test the target's unit economics before signing.",
+      experts: [
+        { initials: "N", title: "Ex. VP Category, Beauty", company: "Nykaa" },
+        { initials: "HC", title: "Ex. Head of Growth Marketing", company: "Honasa Consumer" },
+        { initials: "HU", title: "Ex. GM Skin Care", company: "Hindustan Unilever" },
+      ],
+      tags: ["Expert Consultations", "Quick Insights", "Market Research"],
+    },
+    {
+      badge: "Expert Consultations",
+      subIndustry: "FMCG",
+      headline: "Alternatives supported a consulting firm in mapping rural distribution networks across North and East India.",
+      sector: "FMCG",
+      scope: "Expert Consultations",
+      duration: "60 mins",
+      overview: [
+        "Alternatives connected the project team with rural sales and distribution leaders from leading FMCG and foods companies.",
+        "Conversations covered distributor economics, rural retail penetration, and last-mile fulfillment models.",
+      ],
+      quote: "Alternatives helped the client design a phased rural go-to-market rollout.",
+      experts: [
+        { initials: "D", title: "Ex. Head of Rural Sales", company: "Dabur" },
+        { initials: "IF", title: "Ex. National Distribution Manager", company: "ITC Foods" },
+        { initials: "B", title: "Ex. VP Sales, East", company: "Britannia" },
+      ],
+      tags: ["Expert Consultations", "Quick Insights", "Market Research"],
+    },
+    {
+      badge: "Advisor Connect",
+      subIndustry: "Food Service",
+      headline: "Alternatives placed an operating advisor with a private equity firm to support a QSR franchising scale-up.",
+      sector: "Food Service",
+      scope: "Operating Advisor",
+      duration: "12 weeks",
+      overview: [
+        "Alternatives identified an operating advisor with direct QSR franchising and expansion experience in the Indian market.",
+        "The advisor supported franchisee selection criteria, unit economics benchmarking, and store rollout sequencing.",
+      ],
+      quote: "Alternatives helped the client build a disciplined franchise expansion playbook.",
+      experts: [
+        { initials: "JF", title: "Ex. COO", company: "Jubilant FoodWorks" },
+        { initials: "MI", title: "Ex. Head of Franchising", company: "McDonald's India" },
+        { initials: "DI", title: "Ex. VP Expansion", company: "Devyani International" },
+      ],
+      tags: ["Operating Advisors", "Fractional Consultants", "Deal Advisors"],
+    },
+    {
+      badge: "Surveys",
+      subIndustry: "Retail",
+      headline: "Alternatives supported a consumer fund in surveying urban households on the shift toward quick-commerce grocery shopping.",
+      sector: "Retail",
+      scope: "Quantitative Survey",
+      duration: "2 weeks, 1,500+ households, 8 metros",
+      overview: [
+        "Alternatives surveyed households across eight metros on grocery spend, channel mix, and quick-commerce adoption drivers.",
+        "The results were segmented by income cohort and city tier to inform the fund's category thesis.",
+      ],
+      quote: "Alternatives helped the client quantify how fast quick-commerce is displacing traditional grocery trips.",
+      experts: [
+        { initials: "B", title: "Ex. Head of Category, Grocery", company: "BigBasket" },
+        { initials: "B", title: "Ex. VP Operations", company: "Blinkit" },
+        { initials: "RR", title: "Ex. Director Modern Trade", company: "Reliance Retail" },
+      ],
+      tags: ["Quantitative Surveys", "Market Sentiment", "Benchmarking"],
+    },
+  ],
+];
+
+const CASE_CARD_GRADIENTS = [
+  "linear-gradient(160deg, #2a2a5c 0%, #1f2037 100%)",
+  "linear-gradient(160deg, #26273a 0%, #16171d 100%)",
+  "linear-gradient(160deg, #3a39b8 0%, #2a2a5c 100%)",
+  "linear-gradient(160deg, #2e2e4a 0%, #1c1d24 100%)",
+];
 
 const STATS = [
   { target: null as number | null, suffix: "", label: "Year Set Up", value: "2023" },
@@ -136,6 +578,56 @@ type ContactFormData = z.infer<typeof contactSchema>;
 
 const LOGO = "/landing/assets/logo.png";
 
+function ClientCardPattern({ kind }: { kind: "network" | "dots" | "bars" }) {
+  if (kind === "network") {
+    return (
+      <svg viewBox="0 0 400 200" width="100%" height="100%" preserveAspectRatio="xMidYMid slice" style={{ position: "absolute", inset: 0 }}>
+        <g stroke="#ffffff" strokeOpacity="0.35" strokeWidth="1">
+          <line x1="40" y1="40" x2="140" y2="90" /><line x1="140" y1="90" x2="90" y2="160" />
+          <line x1="140" y1="90" x2="240" y2="60" /><line x1="240" y1="60" x2="330" y2="120" />
+          <line x1="240" y1="60" x2="200" y2="170" /><line x1="330" y1="120" x2="370" y2="40" />
+          <line x1="90" y1="160" x2="200" y2="170" />
+        </g>
+        <g fill="#ffffff">
+          <circle cx="40" cy="40" r="5" fillOpacity="0.55" />
+          <circle cx="140" cy="90" r="7" fillOpacity="0.75" />
+          <circle cx="90" cy="160" r="4" fillOpacity="0.4" />
+          <circle cx="240" cy="60" r="6" fillOpacity="0.6" />
+          <circle cx="330" cy="120" r="5" fillOpacity="0.5" />
+          <circle cx="370" cy="40" r="3.5" fillOpacity="0.35" />
+          <circle cx="200" cy="170" r="4.5" fillOpacity="0.45" />
+        </g>
+      </svg>
+    );
+  }
+  if (kind === "dots") {
+    const rows = 6;
+    const cols = 14;
+    const dots: any[] = [];
+    for (let r = 0; r < rows; r++) {
+      for (let c = 0; c < cols; c++) {
+        dots.push(<circle key={`${r}-${c}`} cx={16 + c * 28} cy={16 + r * 28} r="2.2" fill="#c9c9ff" />);
+      }
+    }
+    return (
+      <svg viewBox="0 0 400 200" width="100%" height="100%" preserveAspectRatio="xMidYMid slice" style={{ position: "absolute", inset: 0 }}>
+        {dots}
+      </svg>
+    );
+  }
+  return (
+    <svg viewBox="0 0 400 200" width="100%" height="100%" preserveAspectRatio="xMidYMid slice" style={{ position: "absolute", inset: 0 }}>
+      <g fill="#ffffff" fillOpacity="0.18">
+        <rect x="30" y="120" width="24" height="60" /><rect x="70" y="90" width="24" height="90" />
+        <rect x="110" y="60" width="24" height="120" /><rect x="150" y="100" width="24" height="80" />
+        <rect x="190" y="40" width="24" height="140" /><rect x="230" y="80" width="24" height="100" />
+        <rect x="270" y="55" width="24" height="125" /><rect x="310" y="110" width="24" height="70" />
+        <rect x="350" y="70" width="24" height="110" />
+      </g>
+    </svg>
+  );
+}
+
 export default function Home() {
   const { user, loading, isAuthenticated, logout } = useAuth();
   const [, navigate] = useLocation();
@@ -144,6 +636,8 @@ export default function Home() {
   const [openIdx, setOpenIdx] = useState<boolean[]>([true, false, false, false, false]);
   const [activePanel, setActivePanel] = useState(0);
   const [activeSector, setActiveSector] = useState(1);
+  const [activeCaseSector, setActiveCaseSector] = useState(0);
+  const [activeCase, setActiveCase] = useState(0);
   const [scrollPct, setScrollPct] = useState(0);
   const [showBackToTop, setShowBackToTop] = useState(false);
   const [statsK, setStatsK] = useState(0);
@@ -189,6 +683,11 @@ export default function Home() {
       next[i] = !next[i];
       return next;
     });
+  };
+
+  const pickCaseSector = (i: number) => {
+    setActiveCaseSector(i);
+    setActiveCase(0);
   };
 
   // ---- Contact form (wired to the real leads API) ----
@@ -370,7 +869,7 @@ export default function Home() {
               </div>
               <div style={{ display: "flex", alignItems: "baseline", gap: 10, borderTop: `1px solid ${C.divider}`, paddingTop: 10 }}>
                 <span style={{ width: 7, height: 7, background: "#b3b2ff", display: "inline-block" }} />
-                <span style={{ fontSize: 13.5, color: C.muted }}>Active coverage</span>
+                <span style={{ fontSize: 13.5, color: C.muted }}>Select a location to view sample case illustrations</span>
               </div>
             </div>
           </div>
@@ -383,8 +882,11 @@ export default function Home() {
       {/* Marquee */}
       <div style={{ overflow: "hidden", margin: "64px 0 0", padding: "14px 0", borderTop: `1px solid ${C.divider}`, borderBottom: `1px solid ${C.divider}` }}>
         <div className="alt-marquee-track" style={{ fontSize: 13, letterSpacing: "0.1em", textTransform: "uppercase", color: C.labelGrey }}>
-          {[...MARQUEE_ITEMS, ...MARQUEE_ITEMS].map((item, i) => (
-            <span key={i}>{item}</span>
+          {[...REGION_MARQUEE, ...REGION_MARQUEE].map((item, i) => (
+            <span key={i} style={{ display: "inline-flex", gap: 10, alignItems: "baseline" }}>
+              <span style={{ color: C.accent }}>{item.count}</span>
+              <span>{item.region}</span>
+            </span>
           ))}
         </div>
       </div>
@@ -413,9 +915,12 @@ export default function Home() {
                   <div style={{ opacity: active ? 1 : 0, transition: "opacity .35s ease .12s" }}>
                     <h3 style={{ fontSize: 27, lineHeight: 1.2, color: "#fff", margin: "0 0 10px", maxWidth: "22ch", fontWeight: 500 }}>{p.title}</h3>
                     <p style={{ fontSize: 14.5, lineHeight: 1.55, color: "rgba(255,255,255,0.78)", margin: "0 0 18px", maxWidth: "34ch" }}>{p.desc}</p>
-                    <span style={{ fontSize: 14, color: "#fff", display: "inline-flex", alignItems: "center", gap: 10 }}>
+                    <a
+                      href="#offerings"
+                      style={{ pointerEvents: "auto", position: "relative", zIndex: 2, fontSize: 14, color: "#fff", textDecoration: "none", display: "inline-flex", alignItems: "center", gap: 10, cursor: "pointer" }}
+                    >
                       <span style={{ width: 26, height: 1, background: "#fff", display: "inline-block" }} />Read More
-                    </span>
+                    </a>
                   </div>
                 </div>
               </div>
@@ -478,17 +983,35 @@ export default function Home() {
           <span className="alt-kicker" style={{ color: "#9a9aff" }}>Client Types</span>
           <h2 style={{ fontSize: "clamp(30px, 4vw, 44px)", lineHeight: 1.15, letterSpacing: "-0.01em", margin: "0 0 40px", maxWidth: "18ch", color: "#ffffff", fontWeight: 500 }}>Who we work with</h2>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(3, minmax(0, 1fr))", gap: 20 }}>
-            {CLIENT_TYPES.map((c) => (
-              <div key={c.title} className="alt-ctcard" style={{ background: C.surface, border: "none", borderRadius: 20, padding: "32px 28px 34px" }}>
-                <p style={{ fontSize: 12, color: C.accent, margin: "0 0 18px" }}>{c.roman}</p>
-                <h3 style={{ fontSize: 22, lineHeight: 1.25, margin: "0 0 16px", fontWeight: 500 }}>{c.title}</h3>
-                <div style={{ display: "grid", gap: 0 }}>
-                  {c.points.map((pt) => (
-                    <p key={pt} style={{ fontSize: 14, lineHeight: 1.6, color: C.muted, margin: 0, padding: "7px 0", borderTop: `1px solid ${C.divider}` }}>{pt}</p>
-                  ))}
+            {CLIENT_TYPES.map((c) => {
+              const dark = c.headerPattern !== "dots";
+              return (
+                <div key={c.title} className="alt-ctcard" style={{ background: C.surface, border: "none", borderRadius: 20, overflow: "hidden" }}>
+                  <div style={{ position: "relative", height: 200, background: c.headerBg, overflow: "hidden", borderBottom: c.headerPattern === "dots" ? `1px solid ${C.divider}` : "none" }}>
+                    <ClientCardPattern kind={c.headerPattern} />
+                    <span
+                      style={{
+                        position: "absolute", left: -6, bottom: -34, fontSize: 140, lineHeight: 1, fontWeight: 500,
+                        letterSpacing: "-0.04em", color: "transparent",
+                        WebkitTextStroke: dark ? "1.5px rgba(255,255,255,0.28)" : "1.5px rgba(77,76,255,0.28)",
+                        pointerEvents: "none",
+                      }}
+                    >
+                      {c.numeral}
+                    </span>
+                  </div>
+                  <div style={{ padding: "28px 28px 34px" }}>
+                    <p style={{ fontSize: 12, color: C.accent, margin: "0 0 18px" }}>{c.roman}</p>
+                    <h3 style={{ fontSize: 22, lineHeight: 1.25, margin: "0 0 16px", fontWeight: 500 }}>{c.title}</h3>
+                    <div style={{ display: "grid", gap: 0 }}>
+                      {c.points.map((pt) => (
+                        <p key={pt} style={{ fontSize: 14, lineHeight: 1.6, color: C.muted, margin: 0, padding: "7px 0", borderTop: `1px solid ${C.divider}` }}>{pt}</p>
+                      ))}
+                    </div>
+                  </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>
@@ -528,6 +1051,143 @@ export default function Home() {
           </div>
           <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
             {sector.tags.map((t) => <span key={t} className="alt-tag">{t}</span>)}
+          </div>
+        </div>
+      </section>
+
+      {/* Case Studies */}
+      <section id="cases" style={{ background: "#ffffff", padding: "88px clamp(20px, 5vw, 72px) 80px" }}>
+        <div style={{ maxWidth: 1200, margin: "0 auto" }}>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", gap: 24, flexWrap: "wrap", marginBottom: 22 }}>
+            <div>
+              <span className="alt-kicker">Case Studies</span>
+              <h2 style={{ fontSize: "clamp(30px, 4vw, 44px)", lineHeight: 1.15, letterSpacing: "-0.01em", margin: 0, maxWidth: "18ch", fontWeight: 500 }}>Our body of work</h2>
+            </div>
+            <div style={{ display: "flex", gap: 6 }}>
+              <button
+                type="button"
+                aria-label="Previous case study"
+                onClick={() => setActiveCase((p) => (p - 1 + CASE_STUDIES[activeCaseSector].length) % CASE_STUDIES[activeCaseSector].length)}
+                style={{ width: 44, height: 44, border: `1px solid ${C.divider}`, background: "#ffffff", color: C.ink, cursor: "pointer", fontSize: 18 }}
+              >
+                ←
+              </button>
+              <button
+                type="button"
+                aria-label="Next case study"
+                onClick={() => setActiveCase((p) => (p + 1) % CASE_STUDIES[activeCaseSector].length)}
+                style={{ width: 44, height: 44, border: `1px solid ${C.accent}`, background: C.accent, color: "#ffffff", cursor: "pointer", fontSize: 18 }}
+              >
+                →
+              </button>
+            </div>
+          </div>
+
+          <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 28 }}>
+            {CASE_SECTORS.map((s, i) => {
+              const on = activeCaseSector === i;
+              return (
+                <button
+                  key={s}
+                  type="button"
+                  className="alt-sector-btn"
+                  onClick={() => pickCaseSector(i)}
+                  style={{ border: `1px solid ${on ? C.accent : C.divider}`, background: on ? C.accent : "transparent", color: on ? "#ffffff" : C.muted }}
+                >
+                  {s}
+                </button>
+              );
+            })}
+          </div>
+
+          <div style={{ display: "flex", gap: 6, minHeight: 660, alignItems: "stretch" }}>
+            {CASE_STUDIES[activeCaseSector].map((cs, i) => {
+              const active = activeCase === i;
+              return (
+                <div
+                  key={cs.subIndustry}
+                  onMouseEnter={() => setActiveCase(i)}
+                  onClick={() => setActiveCase(i)}
+                  style={{
+                    position: "relative", overflow: "hidden", cursor: "pointer",
+                    background: CASE_CARD_GRADIENTS[i % CASE_CARD_GRADIENTS.length],
+                    color: "#ffffff", flex: `${active ? 8 : 1} 1 0%`, minWidth: 52,
+                    transition: "flex-grow .6s cubic-bezier(.4,0,.2,1)",
+                  }}
+                >
+                  <div style={{ position: "absolute", left: 0, right: 0, top: 0, height: 3, background: C.accent, opacity: active ? 1 : 0, transition: "opacity .4s ease" }} />
+                  <span
+                    style={{
+                      position: "absolute", right: -10, bottom: -40, fontSize: 220, lineHeight: 1, fontWeight: 500,
+                      letterSpacing: "-0.06em", color: "transparent", WebkitTextStroke: "1px #9a9aff38",
+                      pointerEvents: "none", opacity: active ? 0 : 1,
+                    }}
+                  >
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                  {!active && (
+                    <div style={{ position: "absolute", inset: 0, display: "flex", flexDirection: "column", justifyContent: "space-between", alignItems: "center", padding: "26px 0", transition: "opacity .3s ease", pointerEvents: "none" }}>
+                      <span style={{ fontSize: 13, color: "#9a9aff" }}>{String(i + 1).padStart(2, "0")}</span>
+                      <span style={{ writingMode: "vertical-rl", transform: "rotate(180deg)", fontSize: 15, letterSpacing: "0.02em", whiteSpace: "nowrap", color: "#ffffff" }}>{cs.subIndustry}</span>
+                    </div>
+                  )}
+                  {active && (
+                    <div style={{ padding: "clamp(22px, 3vw, 34px) clamp(20px, 3vw, 40px)", maxWidth: 820, boxSizing: "border-box", display: "grid", alignContent: "start", gap: 20 }}>
+                      <div style={{ display: "flex", alignItems: "center", gap: 12, flexWrap: "wrap" }}>
+                        <span style={{ fontSize: 11, letterSpacing: "0.14em", textTransform: "uppercase", color: "#ffffff", background: C.accent, padding: "6px 10px" }}>{cs.badge}</span>
+                        <span style={{ fontSize: 11, letterSpacing: "0.14em", textTransform: "uppercase", color: "rgba(255,255,255,0.82)" }}>{CASE_SECTORS[activeCaseSector]} · {cs.subIndustry}</span>
+                        <span style={{ marginLeft: "auto", fontSize: 13, color: "#9a9aff" }}>{String(i + 1).padStart(2, "0")} / {String(CASE_STUDIES[activeCaseSector].length).padStart(2, "0")}</span>
+                      </div>
+                      <h3 style={{ fontSize: "clamp(17px, 1.9vw, 23px)", lineHeight: 1.35, letterSpacing: "-0.01em", margin: 0, color: "#ffffff", maxWidth: "40ch" }}>{cs.headline}</h3>
+                      <div style={{ display: "grid", gridTemplateColumns: "repeat(3, minmax(0, 1fr))", gap: 18, borderTop: "1px solid rgba(255,255,255,0.22)", borderBottom: "1px solid rgba(255,255,255,0.22)" }}>
+                        <div style={{ padding: "12px 18px 12px 0", borderRight: "1px solid rgba(255,255,255,0.22)" }}>
+                          <p style={{ fontSize: 10.5, letterSpacing: "0.14em", textTransform: "uppercase", color: "#9a9aff", margin: "0 0 4px" }}>Sector</p>
+                          <p style={{ fontSize: 14, color: "#ffffff", margin: 0 }}>{cs.sector}</p>
+                        </div>
+                        <div style={{ padding: "12px 18px 12px 0", borderRight: "1px solid rgba(255,255,255,0.22)" }}>
+                          <p style={{ fontSize: 10.5, letterSpacing: "0.14em", textTransform: "uppercase", color: "#9a9aff", margin: "0 0 4px" }}>Scope</p>
+                          <p style={{ fontSize: 14, color: "#ffffff", margin: 0 }}>{cs.scope}</p>
+                        </div>
+                        <div style={{ padding: "12px 18px 12px 0" }}>
+                          <p style={{ fontSize: 10.5, letterSpacing: "0.14em", textTransform: "uppercase", color: "#9a9aff", margin: "0 0 4px" }}>Duration</p>
+                          <p style={{ fontSize: 14, color: "#ffffff", margin: 0 }}>{cs.duration}</p>
+                        </div>
+                      </div>
+                      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: "24px 32px" }}>
+                        <div>
+                          <p style={{ fontSize: 10.5, letterSpacing: "0.14em", textTransform: "uppercase", color: "#9a9aff", margin: "0 0 10px" }}>Overview</p>
+                          {cs.overview.map((p, oi) => (
+                            <p key={oi} style={{ fontSize: 13.5, lineHeight: 1.6, color: "rgba(255,255,255,0.9)", margin: "0 0 10px" }}>{p}</p>
+                          ))}
+                          <p style={{ fontSize: 14, lineHeight: 1.55, color: "#ffffff", margin: "14px 0 0", paddingLeft: 14, borderLeft: `2px solid ${C.accent}` }}>{cs.quote}</p>
+                        </div>
+                        <div>
+                          <p style={{ fontSize: 10.5, letterSpacing: "0.14em", textTransform: "uppercase", color: "#9a9aff", margin: "0 0 10px" }}>
+                            Expert profiles showcased <span style={{ color: "rgba(255,255,255,0.7)" }}>(All Formers)</span>
+                          </p>
+                          <div style={{ display: "grid", gap: 8 }}>
+                            {cs.experts.map((ex, ei) => (
+                              <div key={ei} style={{ display: "grid", gridTemplateColumns: "34px minmax(0, 1fr)", gap: 12, alignItems: "center", padding: "10px 12px", background: "rgba(255,255,255,0.14)", border: "1px solid rgba(255,255,255,0.2)" }}>
+                                <span style={{ width: 34, height: 34, borderRadius: "50%", background: C.accentTint, color: C.accent, display: "grid", placeItems: "center", fontSize: 12 }}>{ex.initials}</span>
+                                <span>
+                                  <span style={{ display: "block", fontSize: 13.5, lineHeight: 1.35, color: "#ffffff" }}>{ex.title}</span>
+                                  <span style={{ display: "block", fontSize: 12, color: "rgba(255,255,255,0.75)", marginTop: 2 }}>{ex.company}</span>
+                                </span>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+                      <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginTop: 4 }}>
+                        {cs.tags.map((t) => (
+                          <span key={t} style={{ fontSize: 12, padding: "5px 10px", border: "1px solid rgba(255,255,255,0.35)", color: "rgba(255,255,255,0.88)" }}>{t}</span>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>

@@ -10,23 +10,45 @@
   .land { fill: #f2f2f7; stroke: #e2e2ea; stroke-width: .6; transition: fill .25s ease; }
   .land.lit { fill: #ecebff; }
   .hub { fill: #4d4cff; cursor: pointer; }
+  .hub.sel { fill: #3e3e40; }
   .halo { fill: none; stroke: #4d4cff; }
   #tip { position: fixed; pointer-events: none; opacity: 0; transition: opacity .15s ease;
     background: #3e3e40; color: #fff; font-size: 12px; padding: 6px 10px; white-space: nowrap; transform: translate(-50%, -140%); }
+  #card { position: fixed; right: 14px; top: 14px; max-height: calc(100vh - 28px); overflow-y: auto; width: 270px; max-width: calc(100vw - 28px); background: #fff; border: 1px solid #e6e6ea; box-shadow: 0 10px 30px rgba(20,20,60,.10); padding: 16px 18px; opacity: 0; transform: translateY(6px); pointer-events: none; transition: opacity .2s ease, transform .2s ease; }
+  #card.on { opacity: 1; transform: none; pointer-events: auto; }
+  #card .k { font-size: 10.5px; letter-spacing: .14em; text-transform: uppercase; color: #4d4cff; margin: 0 0 4px; }
+  #card .loc { font-size: 16px; font-weight: 500; color: #3e3e40; margin: 0 0 10px; }
+  #card .p { display: flex; gap: 10px; align-items: flex-start; padding: 7px 0; border-top: 1px solid #eeeef2; font-size: 13px; line-height: 1.45; color: #3e3e40; }
+  #card .av { flex: none; width: 26px; height: 26px; border-radius: 50%; background: #ecebff; color: #4d4cff; font-size: 11px; display: grid; place-items: center; }
+  #card .x { position: absolute; top: 8px; right: 10px; border: 0; background: none; font-size: 18px; color: #6e6e73; cursor: pointer; font-family: inherit; }
 </style>
 </head>
 <body>
 <div id="map"></div>
 <div id="tip"></div>
+<div id="card"><button class="x" aria-label="Close">×</button><p class="k">Sample case illustrations</p><p class="loc"></p><div class="list"></div></div>
 <script>
 const HUBS = [
-  ["Mumbai", 72.87, 19.07, 1], ["Bengaluru", 77.59, 12.97, 1], ["Delhi NCR", 77.10, 28.70, 1],
-  ["Singapore", 103.82, 1.35, 1], ["Dubai", 55.27, 25.20, 1], ["London", -0.13, 51.51, 1],
-  ["New York", -74.01, 40.71, 1], ["San Francisco", -122.42, 37.77, 0], ["Hong Kong", 114.17, 22.32, 0],
-  ["Tokyo", 139.69, 35.69, 0], ["Sydney", 151.21, -33.87, 0], ["Frankfurt", 8.68, 50.11, 0],
-  ["São Paulo", -46.63, -23.55, 0], ["Toronto", -79.38, 43.65, 0], ["Johannesburg", 28.05, -26.20, 0],
-  ["Riyadh", 46.72, 24.71, 0], ["Seoul", 126.98, 37.57, 0], ["Jakarta", 106.85, -6.21, 0],
-  ["Amsterdam", 4.90, 52.37, 0], ["Shanghai", 121.47, 31.23, 0]
+  ["Mumbai, India", 72.87, 19.07, ["Decoding Marketing in the BPC Industry", "Mapping the Private Credit Landscape in India", "Paint & Coatings Dealer Economics", "Quick Commerce Unit Economics in Metros", "Assessing the Specialty Chemicals Export Opportunity"]],
+  ["Bengaluru, India", 77.59, 12.97, ["Benchmarking GCC Talent and Cost Structures", "SaaS Go-to-Market Playbooks for Mid-Market", "Biosimilars Pipeline and Pricing Outlook", "EV Two-Wheeler Supply Chain Assessment", "AI Adoption in Indian IT Services"]],
+  ["Delhi NCR, India", 77.10, 28.70, ["Hospital Chain Expansion in Tier-2 Cities", "Auto Component Aftermarket Sizing", "Telecom Tower Infrastructure Economics", "Ayurveda and Herbal FMCG Market Entry", "Diagnostics Lab Consolidation Trends"]],
+  ["Singapore", 103.82, 1.35, ["Southeast Asia Digital Payments Landscape", "Regional Cold Chain Logistics Assessment", "Family Office Investment Preferences", "Data Center Capacity and Power Constraints", "Halal Food Export Channels"]],
+  ["Dubai, UAE", 55.27, 25.20, ["GCC Luxury Retail Demand Drivers", "Aviation MRO Market Assessment", "Real Estate Developer Financing Models", "Free Zone Logistics Competitive Review", "Fintech Licensing and Neobank Adoption"]],
+  ["London, UK", -0.13, 51.51, ["UK Wealth Management Platform Benchmarking", "Grocery Private Label Strategy", "Insurance Broker Consolidation", "Clinical Trial Outsourcing Trends", "Energy Retail Pricing After Market Reform"]],
+  ["New York, USA", -74.01, 40.71, ["Direct Lending Fund Returns and Terms", "Prestige Beauty Channel Shifts", "Pharma Commercial Model Transformation", "Healthcare Staffing Market Review", "Media Advertising Spend Outlook"]],
+  ["San Francisco, USA", -122.42, 37.77, ["Enterprise AI Tooling Buyer Survey", "Payments Infrastructure Vendor Landscape", "Vertical SaaS Pricing Benchmarks", "Cybersecurity Budget Priorities for CISOs", "Developer Platform Adoption Trends"]],
+  ["Hong Kong", 114.17, 22.32, ["Cross-Border Wealth Connect Flows", "Asia Insurance Distribution Models", "Trade Finance Digitization", "Premium Property Market Sentiment", "Luxury Watch Resale Market"]],
+  ["Tokyo, Japan", 139.69, 35.69, ["Industrial Robotics Demand Outlook", "Japan Drug Pricing Reform Impact", "Semiconductor Materials Supply Chain", "Convenience Store Private Label Economics", "Aging Care Services Market Sizing"]],
+  ["Sydney, Australia", 151.21, -33.87, ["Supermarket Supply Chain Automation", "Critical Minerals Offtake Agreements", "Superannuation Fund Allocation Trends", "Infrastructure Asset Valuations", "Pharmacy Retail Consolidation"]],
+  ["Frankfurt, Germany", 8.68, 50.11, ["Mittelstand Succession and Buyout Pipeline", "Industrial Automation Procurement Practices", "Automotive Aftersales Profitability", "Diagnostics Reimbursement in DACH", "Corporate Banking Digital Onboarding"]],
+  ["São Paulo, Brazil", -46.63, -23.55, ["Brazil Agri-Input Distribution", "Beauty Direct Selling Model Evolution", "Pix and Real-Time Payments Impact", "Beverage Route-to-Market Economics", "Private Hospital Network Expansion"]],
+  ["Toronto, Canada", -79.38, 43.65, ["Canadian Capital Markets Advisory Fees", "Grocery Price Competition Review", "Pipeline and Energy Transition Capex", "Commerce Platform Merchant Economics", "Life Insurance Product Innovation"]],
+  ["Johannesburg, South Africa", 28.05, -26.20, ["Platinum Group Metals Demand Outlook", "Informal Retail Channel Sizing", "Mobile Money Adoption Across Africa", "Private Healthcare Medical Scheme Trends", "Renewable Energy Procurement Programme"]],
+  ["Riyadh, Saudi Arabia", 46.72, 24.71, ["Vision 2030 Tourism Investment Pipeline", "Downstream Petrochemicals Margin Outlook", "Healthcare Privatization Opportunities", "Giga-Project Construction Supply Chain", "Saudi Retail Mall Footfall Trends"]],
+  ["Seoul, South Korea", 126.98, 37.57, ["Decoding Marketing in the BPC Industry", "K-Beauty Export Channel Strategy", "EV Battery Materials Sourcing", "Memory Chip Cycle Outlook", "Korean Auto Overseas Sales Strategy"]],
+  ["Jakarta, Indonesia", 106.85, -6.21, ["Nickel Processing Value Chain", "Indonesia Digital Lending Market", "Super App Logistics Economics", "Consumer Staples Rural Distribution", "Bank Digital Transformation Benchmarks"]],
+  ["Amsterdam, Netherlands", 4.90, 52.37, ["Lithography Equipment Supply Outlook", "European Payments Acquiring Landscape", "Brewing Sustainability Commitments", "Medical Devices Distribution in Benelux", "Energy Trading Desk Operating Models"]],
+  ["Shanghai, China", 121.47, 31.23, ["China Beauty Market Channel Mix", "EV Pricing and Export Strategy", "Cross-Border E-commerce Logistics", "Pharma Market Access and VBP Impact", "Industrial Automation Localization"]]
 ];
 const LIT = new Set(["India","United States of America","United Kingdom","Singapore","United Arab Emirates","China","Japan","Australia","Germany","Brazil","Canada","South Africa","Saudi Arabia","South Korea","Indonesia","Netherlands","France","Switzerland","Malaysia","Vietnam"]);
 
@@ -43,20 +65,33 @@ d3.json('https://cdn.jsdelivr.net/npm/world-atlas@2.0.2/countries-110m.json').th
     .attr('class', d => 'land' + (LIT.has(d.properties.name) ? ' lit' : ''));
 
   const g = svg.append('g');
-  HUBS.forEach(([name, lon, lat, major], i) => {
+  const card = document.getElementById('card');
+  let selDot = null;
+  const close = () => { card.classList.remove('on'); if (selDot) selDot.classed('sel', false); selDot = null; };
+  card.querySelector('.x').onclick = close;
+  svg.on('click', (ev) => { if (ev.target.tagName !== 'circle') close(); });
+
+  HUBS.forEach(([name, lon, lat, cases], i) => {
     const p = proj([lon, lat]); if (!p) return;
-    const r = major ? 4.5 : 3;
-    const halo = g.append('circle').attr('class', 'halo').attr('cx', p[0]).attr('cy', p[1]).attr('r', r);
+    const r = 4;
+    const halo = g.append('circle').attr('class', 'halo').attr('cx', p[0]).attr('cy', p[1]).attr('r', r).style('pointer-events', 'none');
     (function pulse() {
       halo.attr('r', r).attr('stroke-opacity', .55).attr('stroke-width', 1.2)
         .transition().delay(i * 260 % 3200).duration(2200).ease(d3.easeCubicOut)
-        .attr('r', r + (major ? 26 : 16)).attr('stroke-opacity', 0).on('end', pulse);
+        .attr('r', r + 20).attr('stroke-opacity', 0).on('end', pulse);
     })();
-    g.append('circle').attr('class', 'hub').attr('cx', p[0]).attr('cy', p[1]).attr('r', r)
-      .attr('fill-opacity', major ? 1 : .6)
+    const dot = g.append('circle').attr('class', 'hub').attr('cx', p[0]).attr('cy', p[1]).attr('r', r);
+    g.append('circle').attr('cx', p[0]).attr('cy', p[1]).attr('r', 12).attr('fill', 'transparent').style('cursor', 'pointer')
       .on('mouseenter', (ev) => { tip.textContent = name; tip.style.opacity = 1;
         tip.style.left = ev.clientX + 'px'; tip.style.top = ev.clientY + 'px'; })
-      .on('mouseleave', () => { tip.style.opacity = 0; });
+      .on('mouseleave', () => { tip.style.opacity = 0; })
+      .on('click', (ev) => {
+        ev.stopPropagation(); tip.style.opacity = 0;
+        if (selDot) selDot.classed('sel', false); selDot = dot.classed('sel', true);
+        card.querySelector('.loc').textContent = name;
+        card.querySelector('.list').innerHTML = cases.map(t => '<div class="p"><span class="av">' + String.fromCharCode(8226) + '</span><span>' + t + '</span></div>').join('');
+        card.classList.add('on');
+      });
   });
 });
 </script>
