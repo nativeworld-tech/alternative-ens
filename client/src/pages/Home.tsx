@@ -77,6 +77,11 @@ const CLIENT_TYPES = [
     numeral: "01",
     headerBg: "linear-gradient(135deg, #3a39e6 0%, #4d4cff 60%, #6f6eff 100%)",
     headerPattern: "network" as const,
+    cardBg: "#4d4cff",
+    titleColor: "#ffffff",
+    bodyText: "rgba(255,255,255,0.9)",
+    bulletColor: "#ffffff",
+    divider: "rgba(255,255,255,0.22)",
     title: "Private Equity & Venture Capital",
     points: [
       "Support commercial due diligence and investment evaluations",
@@ -92,6 +97,11 @@ const CLIENT_TYPES = [
     numeral: "02",
     headerBg: "#ffffff",
     headerPattern: "dots" as const,
+    cardBg: "#ffffff",
+    titleColor: undefined,
+    bodyText: undefined,
+    bulletColor: undefined,
+    divider: undefined,
     title: "Consulting Firms",
     points: [
       "Connect project teams with industry and functional experts",
@@ -106,6 +116,11 @@ const CLIENT_TYPES = [
     numeral: "03",
     headerBg: "#26273a",
     headerPattern: "bars" as const,
+    cardBg: "#26273a",
+    titleColor: "#ffffff",
+    bodyText: "rgba(255,255,255,0.78)",
+    bulletColor: "#9a9aff",
+    divider: "rgba(255,255,255,0.12)",
     title: "Corporates & Enterprises",
     points: [
       "Support strategic planning and business transformation",
@@ -218,12 +233,12 @@ const CASE_STUDIES: CaseStudy[][] = [
       headline: "Alternatives supported an investment firm in surveying pathologists and lab directors to gauge adoption of digital pathology platforms across India and the Middle East.",
       sector: "Diagnostics",
       scope: "Quantitative Survey",
-      duration: "3 weeks, 120+ respondents",
+      duration: "3 weeks",
       overview: [
-        "Alternatives fielded a structured survey among practicing pathologists and diagnostics procurement leaders to size near-term appetite for digital pathology and AI-assisted reads.",
-        "Responses covered budget ownership, vendor shortlists, and rollout timelines across hospital and standalone-lab settings.",
+        "Alternatives recruited over 120 practising pathologists, lab directors, and procurement heads from hospital-based and standalone laboratories.",
+        "The survey captured current workflows, budget cycles, vendor preferences, and expected timelines for moving to digital slide scanning.",
       ],
-      quote: "Alternatives helped the client size near-term demand and validate its investment thesis.",
+      quote: "Alternatives helped the client size near-term demand and validate its investment thesis in digital diagnostics.",
       experts: [
         { initials: "DL", title: "Ex. Lab Director", company: "Dr Lal PathLabs" },
         { initials: "AD", title: "Ex. Head of Pathology", company: "Aster DM Healthcare" },
@@ -237,15 +252,15 @@ const CASE_STUDIES: CaseStudy[][] = [
     {
       badge: "Expert Consultations",
       subIndustry: "IT Services",
-      headline: "Alternatives supported a private equity-owned IT services portfolio company in benchmarking sales structures and compensation design against global peers.",
+      headline: "Alternatives partnered with a global PE-backed tech portfolio to deliver insights on sales team structures and compensation models across leading IT services firms.",
       sector: "IT Services",
       scope: "Expert Consultations",
       duration: "60 mins",
       overview: [
-        "Alternatives connected the client with senior sales and client-management leaders from comparable global services and BPO organizations.",
-        "Conversations covered account coverage models, quota design, and variable-pay structures for enterprise sales teams.",
+        "Drawing on its global network, Alternatives connected the client with senior sales leaders from top IT services companies, including cyber security, BPO, and digital services.",
+        "These leaders shared practical insights on team setups, role responsibilities, and incentive models for both hunting and farming functions, giving the client a clear view of effective sales strategies.",
       ],
-      quote: "Alternatives helped the client redesign its sales compensation framework using proven peer benchmarks.",
+      quote: "Alternatives helped the client benchmark sales organizations and gain actionable guidance to optimize performance in IT services.",
       experts: [
         { initials: "GC", title: "Chief Client Officer", company: "Global CX & BPO firm" },
         { initials: "GP", title: "EVP Global Sales", company: "Global Professional Services Firm" },
@@ -257,15 +272,15 @@ const CASE_STUDIES: CaseStudy[][] = [
     {
       badge: "Surveys",
       subIndustry: "Cybersecurity",
-      headline: "Alternatives supported a growth equity investor in surveying CISOs on budget allocation and vendor consolidation trends across the US and Europe.",
+      headline: "Alternatives supported a growth equity investor in surveying CISOs and security leaders on budget priorities and vendor consolidation across the US and Europe.",
       sector: "Cybersecurity",
       scope: "Quantitative Survey",
-      duration: "2 weeks, 150+ respondents",
+      duration: "2 weeks",
       overview: [
-        "Alternatives surveyed security leaders on spend priorities, tool sprawl, and consolidation intentions across identity, endpoint, and cloud security categories.",
-        "Findings were segmented by company size and industry to support the investor's category thesis.",
+        "Alternatives recruited over 150 CISOs, security architects, and IT procurement leaders from enterprises with more than 1,000 employees.",
+        "The survey covered spend allocation across identity, cloud, and endpoint security, platform consolidation plans, and switching intent for incumbent vendors.",
       ],
-      quote: "Alternatives helped the client validate where CISO budgets are consolidating over the next 12 months.",
+      quote: "Alternatives helped the client identify the segments with the strongest budget momentum ahead of a platform investment.",
       experts: [
         { initials: "GR", title: "Ex. CISO", company: "Global Retail Bank" },
         { initials: "FM", title: "Ex. VP Security Architecture", company: "Fortune 500 Manufacturer" },
@@ -276,15 +291,15 @@ const CASE_STUDIES: CaseStudy[][] = [
     {
       badge: "Interim & Fractional",
       subIndustry: "SaaS",
-      headline: "Alternatives placed a fractional Chief Revenue Officer at a vertical SaaS company to lead its US mid-market expansion.",
+      headline: "Alternatives supported a private equity firm in placing a fractional Chief Revenue Officer at a vertical SaaS portfolio company preparing to expand into the US mid-market.",
       sector: "SaaS",
       scope: "Fractional CRO",
       duration: "9 months",
       overview: [
-        "Alternatives identified a fractional CRO with direct experience scaling mid-market SaaS go-to-market motions in North America.",
-        "The advisor rebuilt the pipeline model, hired the first US-based AEs, and set the pricing and packaging strategy for the segment.",
+        "Alternatives identified revenue leaders who had scaled SaaS businesses from early growth to over USD 50 million in annual recurring revenue.",
+        "The placed executive redesigned the sales process, pricing tiers, and partner channel, and built the hiring plan for a US go-to-market team.",
       ],
-      quote: "Alternatives helped the client stand up a repeatable US mid-market motion within two quarters.",
+      quote: "Alternatives helped the client accelerate US pipeline creation while keeping leadership costs aligned to its stage.",
       experts: [
         { initials: "F", title: "Ex. CRO", company: "Freshworks" },
         { initials: "Z", title: "Ex. VP Sales, NA", company: "Zoho" },
@@ -295,15 +310,15 @@ const CASE_STUDIES: CaseStudy[][] = [
     {
       badge: "Expert Consultations",
       subIndustry: "Data Centers",
-      headline: "Alternatives supported an infrastructure fund in evaluating power availability and hyperscaler demand across India and Southeast Asia.",
+      headline: "Alternatives supported an infrastructure fund in evaluating power availability and hyperscaler demand for data center capacity across India and Southeast Asia.",
       sector: "Data Centers",
       scope: "Expert Consultations",
       duration: "60 mins",
       overview: [
-        "Alternatives connected the fund with data center site-selection and development leaders who had recently commissioned capacity in the region.",
-        "Conversations covered power procurement timelines, land availability, and hyperscaler leasing terms.",
+        "Alternatives connected the client with former data center development, energy procurement, and hyperscaler site selection leaders.",
+        "The experts discussed grid constraints, renewable power purchase agreements, colocation pricing, and the leasing outlook for key metros.",
       ],
-      quote: "Alternatives helped the client stress-test its capacity growth assumptions ahead of investment committee.",
+      quote: "Alternatives helped the client prioritise target markets and refine its underwriting assumptions.",
       experts: [
         { initials: "GH", title: "Ex. Head of Site Selection, APAC", company: "Global Hyperscaler" },
         { initials: "ST", title: "Ex. VP Development", company: "ST Telemedia GDC" },
@@ -317,15 +332,15 @@ const CASE_STUDIES: CaseStudy[][] = [
     {
       badge: "Expert Consultations",
       subIndustry: "Treasury",
-      headline: "Alternatives supported a private equity firm in assessing treasury modernization opportunities at a public sector bank.",
+      headline: "Alternatives supported a leading private equity firm in connecting with senior experts from large PSU banks in India to better understand treasury operations, processes, and modernization opportunities.",
       sector: "Treasury",
       scope: "Expert Consultations",
-      duration: "60 mins",
+      duration: "60 Minutes",
       overview: [
-        "Alternatives connected the client with senior treasury and global markets operations leaders from comparable banks.",
-        "Discussions covered core treasury system upgrades, straight-through processing gaps, and vendor landscape for PSU banks.",
+        "Alternatives leveraged its banking and financial services network to identify senior treasury, risk, and banking operations professionals with extensive experience across treasury management, fixed income, liquidity management, and banking operations within public sector banks.",
+        "The experts brought deep insights into treasury operating models, technology infrastructure, risk management practices, regulatory considerations, and operational challenges faced by PSU banks in India.",
       ],
-      quote: "Alternatives helped the client shape its technology diligence questions ahead of a bid.",
+      quote: "Alternatives helped the client better understand treasury operations and transformation opportunities within the Indian banking sector.",
       experts: [
         { initials: "H", title: "SVP Head Treasury Ops", company: "HDFC" },
         { initials: "BP", title: "Director, Head Global Markets & ALM Treasury Ops", company: "BNP Paribas" },
@@ -336,15 +351,15 @@ const CASE_STUDIES: CaseStudy[][] = [
     {
       badge: "Advisor Connect",
       subIndustry: "Investment Management",
-      headline: "Alternatives supported a private equity firm in mapping the investment management technology landscape in India.",
+      headline: "Alternatives supported a leading private equity firm in understanding the technology solutions landscape across the investment management ecosystem in India, covering the end-to-end investment value chain.",
       sector: "Investment Management",
       scope: "Treasury Operations Consultant",
       duration: "4 weeks",
       overview: [
-        "Alternatives placed a fractional consultant to map front, middle, and back-office technology vendors used by Indian asset managers.",
-        "The engagement produced a landscape view of build-vs-buy decisions and switching costs across the category.",
+        "Alternatives leveraged its financial services network to identify senior experts with deep experience in investment platforms, portfolio management systems, risk tools, operations, and reporting infrastructure across asset managers, insurers, and wealth management firms.",
+        "The experts brought strong knowledge of technology vendors, pricing benchmarks, commercial models, and digital transformation trends within the Indian investment management industry.",
       ],
-      quote: "Alternatives helped the client build conviction on where technology spend is heading in Indian asset management.",
+      quote: "Alternatives helped the client understand investment management technology and digitalization trends in India.",
       experts: [
         { initials: "SM", title: "Sr VP & CIO", company: "SBI Mutual Fund" },
         { initials: "WC", title: "Executive Director & CTO", company: "WhiteOak Capital" },
@@ -355,15 +370,15 @@ const CASE_STUDIES: CaseStudy[][] = [
     {
       badge: "Independent Directors",
       subIndustry: "NBFC",
-      headline: "Alternatives supported a PE-backed NBFC in appointing an independent director ahead of its planned IPO.",
+      headline: "Alternatives supported a PE-backed non-banking finance company in appointing an independent director with credit risk and regulatory expertise ahead of its planned listing.",
       sector: "NBFC",
-      scope: "Independent Director Placement",
+      scope: "Independent Director",
       duration: "8 weeks",
       overview: [
-        "Alternatives ran a targeted search for candidates with credit risk and regulatory experience relevant to an IPO-track NBFC.",
-        "The shortlist was screened for independence, board availability, and audit-committee readiness.",
+        "Alternatives mapped senior banking leaders with board experience, a strong credit and risk background, and familiarity with RBI governance requirements.",
+        "The shortlist was assessed for independence, committee fit, and time commitment before the client met the final candidates.",
       ],
-      quote: "Alternatives helped the client strengthen its board ahead of listing scrutiny.",
+      quote: "Alternatives helped the client strengthen its board and chair its risk committee ahead of the IPO process.",
       experts: [
         { initials: "IB", title: "Ex. CRO", company: "ICICI Bank" },
         { initials: "RB", title: "Ex. Executive Director", company: "RBI" },
@@ -374,15 +389,15 @@ const CASE_STUDIES: CaseStudy[][] = [
     {
       badge: "Surveys",
       subIndustry: "Payments",
-      headline: "Alternatives supported a consulting firm in surveying merchants on digital payment acceptance trends across Indian cities.",
+      headline: "Alternatives supported a consulting firm in surveying small and mid-sized merchants on digital payment acceptance and switching behaviour across Indian cities.",
       sector: "Payments",
       scope: "Quantitative Survey",
-      duration: "3 weeks, 300+ respondents",
+      duration: "3 weeks",
       overview: [
-        "Alternatives surveyed small and mid-sized merchants on acceptance costs, settlement speed, and preferred payment rails.",
-        "The dataset was cut by city tier and merchant category to support the client's go-to-market recommendations.",
+        "Alternatives recruited over 300 merchant owners and finance heads across retail, food service, and healthcare categories in metro and Tier-2 cities.",
+        "The survey covered UPI and card usage, device preferences, merchant discount rates, credit needs, and satisfaction with incumbent acquirers.",
       ],
-      quote: "Alternatives helped the client quantify where UPI and card acceptance friction remains highest.",
+      quote: "Alternatives helped the client quantify the merchant lending opportunity for a payments client.",
       experts: [
         { initials: "P", title: "Ex. Head Merchant Acquiring", company: "Paytm" },
         { initials: "P", title: "Ex. VP Merchant Lending", company: "PhonePe" },
@@ -396,15 +411,15 @@ const CASE_STUDIES: CaseStudy[][] = [
     {
       badge: "Expert Consultations",
       subIndustry: "Lubricants",
-      headline: "Alternatives supported a market research firm in benchmarking agricultural-equipment lubricant suppliers across Southeast Asia and India.",
+      headline: "Alternatives partnered with a leading market research firm to conduct a benchmarking study of lubricant suppliers focused on the agricultural equipment segment across Southeast Asia and India, comparing them against global players.",
       sector: "Lubricants",
-      scope: "Expert Consultations",
+      scope: "Phone Consultations",
       duration: "60 mins",
       overview: [
-        "Alternatives connected the client with OEM procurement and national sales leaders across four lubricant brands and geographies.",
-        "Conversations covered channel margins, OEM approval cycles, and competitive positioning by brand.",
+        "Alternatives leveraged its network of industrial experts to identify senior professionals with direct experience in the agricultural lubricants space, particularly those who had led sales & business initiatives.",
+        "This engagement enabled the client to gain actionable insights into supplier capabilities, market dynamics, and competitive differentiation across SEA and India.",
       ],
-      quote: "Alternatives helped the client build a country-by-country competitive map for its client.",
+      quote: "Alternatives collaborated closely with the client to enable two expert consultations and generate meaningful, actionable insights.",
       experts: [
         { initials: "P", title: "National OEM Manager, India", company: "Petronas" },
         { initials: "K", title: "Procurement Head, Myanmar", company: "Kubota" },
@@ -416,15 +431,15 @@ const CASE_STUDIES: CaseStudy[][] = [
     {
       badge: "Expert Consultations",
       subIndustry: "Auto Components",
-      headline: "Alternatives supported a private equity firm in assessing the impact of the EV shift on powertrain component demand.",
+      headline: "Alternatives supported a private equity firm in assessing how the shift to electric vehicles would affect demand for a portfolio company making powertrain components.",
       sector: "Auto Components",
       scope: "Expert Consultations",
       duration: "60 mins",
       overview: [
-        "Alternatives connected the client with OEM procurement and product planning leaders across passenger and two-wheeler segments.",
-        "Discussions covered component-level content shifts as OEMs transition powertrain mix toward electric platforms.",
+        "Alternatives connected the deal team with former procurement, engineering, and product planning leaders from passenger vehicle and two-wheeler OEMs.",
+        "The experts discussed EV adoption timelines, sourcing localisation, component content per vehicle, and supplier qualification cycles.",
       ],
-      quote: "Alternatives helped the client size which component categories face the steepest demand decline.",
+      quote: "Alternatives helped the client stress-test revenue projections and identify adjacent EV product opportunities.",
       experts: [
         { initials: "TM", title: "Ex. Head of Procurement", company: "Tata Motors" },
         { initials: "BA", title: "Ex. VP Product Planning", company: "Bajaj Auto" },
@@ -435,15 +450,15 @@ const CASE_STUDIES: CaseStudy[][] = [
     {
       badge: "Interim & Fractional",
       subIndustry: "Specialty Chemicals",
-      headline: "Alternatives placed an interim Chief Financial Officer at a specialty chemicals business during a carve-out from its parent group.",
+      headline: "Alternatives supported a specialty chemicals manufacturer in placing an interim Chief Financial Officer during a carve-out from its parent group.",
       sector: "Specialty Chemicals",
       scope: "Interim CFO",
       duration: "5 months",
       overview: [
-        "Alternatives identified an interim CFO with direct carve-out and standalone-finance-function experience in the chemicals sector.",
-        "The advisor built the standalone finance stack, closed the first independent audit, and supported lender negotiations.",
+        "Alternatives identified finance leaders with carve-out, standalone reporting, and lender negotiation experience in manufacturing businesses.",
+        "The placed executive set up standalone finance, treasury, and controls, and supported the transition services agreement with the parent.",
       ],
-      quote: "Alternatives helped the client complete the carve-out finance workstream on schedule.",
+      quote: "Alternatives helped the client complete the separation on time with a finance function ready for a permanent CFO.",
       experts: [
         { initials: "AI", title: "Ex. CFO", company: "Aarti Industries" },
         { initials: "BI", title: "Ex. VP Finance, Carve-outs", company: "BASF India" },
@@ -454,15 +469,15 @@ const CASE_STUDIES: CaseStudy[][] = [
     {
       badge: "Surveys",
       subIndustry: "Logistics",
-      headline: "Alternatives supported an investment firm in surveying supply chain heads on warehousing and third-party logistics adoption.",
+      headline: "Alternatives supported an investment firm in surveying supply chain heads on warehousing needs and third-party logistics outsourcing across India.",
       sector: "Logistics",
       scope: "Quantitative Survey",
-      duration: "3 weeks, 200+ respondents",
+      duration: "3 weeks",
       overview: [
-        "Alternatives surveyed supply chain and logistics heads on 3PL spend, warehouse automation adoption, and switching intent.",
-        "The results informed the investor's view of consolidation opportunities in the 3PL space.",
+        "Alternatives recruited over 200 supply chain, warehousing, and procurement leaders from manufacturing, e-commerce, and consumer goods companies.",
+        "The survey covered planned warehouse capacity, automation budgets, preferred locations, contract lengths, and satisfaction with current logistics providers.",
       ],
-      quote: "Alternatives helped the client validate demand for automated warehousing at scale.",
+      quote: "Alternatives helped the client prioritise locations for a Grade-A warehousing platform.",
       experts: [
         { initials: "AP", title: "Ex. Head of Supply Chain", company: "Asian Paints" },
         { initials: "F", title: "Ex. VP Warehousing", company: "Flipkart" },
@@ -476,15 +491,15 @@ const CASE_STUDIES: CaseStudy[][] = [
     {
       badge: "Expert Consultations",
       subIndustry: "Beauty & Personal Care",
-      headline: "Alternatives supported a private equity firm in evaluating a D2C beauty investment thesis ahead of a growth-round decision.",
+      headline: "Alternatives supported a leading private equity firm in evaluating the digital-first beauty and personal care market in India ahead of a potential investment in a D2C brand.",
       sector: "Beauty & Personal Care",
       scope: "Expert Consultations",
       duration: "60 mins",
       overview: [
-        "Alternatives connected the client with category and growth-marketing leaders who had scaled comparable D2C beauty brands.",
-        "Discussions covered customer acquisition economics, retention curves, and offline expansion playbooks.",
+        "Alternatives leveraged its consumer network to identify senior leaders with experience across brand building, performance marketing, marketplace strategy, and offline distribution for beauty and personal care brands.",
+        "The experts shared insights on customer acquisition costs, channel economics, repeat purchase behaviour, and the competitive landscape across online and modern trade.",
       ],
-      quote: "Alternatives helped the client pressure-test the target's unit economics before signing.",
+      quote: "Alternatives helped the client validate its investment thesis and assess the growth levers for D2C beauty brands in India.",
       experts: [
         { initials: "N", title: "Ex. VP Category, Beauty", company: "Nykaa" },
         { initials: "HC", title: "Ex. Head of Growth Marketing", company: "Honasa Consumer" },
@@ -495,15 +510,15 @@ const CASE_STUDIES: CaseStudy[][] = [
     {
       badge: "Expert Consultations",
       subIndustry: "FMCG",
-      headline: "Alternatives supported a consulting firm in mapping rural distribution networks across North and East India.",
+      headline: "Alternatives supported a strategy consulting firm in mapping rural distribution models for packaged foods and staples across North and East India.",
       sector: "FMCG",
       scope: "Expert Consultations",
       duration: "60 mins",
       overview: [
-        "Alternatives connected the project team with rural sales and distribution leaders from leading FMCG and foods companies.",
-        "Conversations covered distributor economics, rural retail penetration, and last-mile fulfillment models.",
+        "Alternatives connected the project team with former sales and distribution leaders who had built rural reach for leading FMCG companies.",
+        "The experts shared insights on distributor margins, van sales economics, retailer credit, and the role of B2B e-commerce platforms in rural markets.",
       ],
-      quote: "Alternatives helped the client design a phased rural go-to-market rollout.",
+      quote: "Alternatives helped the client design a cost-efficient route-to-market model for its FMCG client.",
       experts: [
         { initials: "D", title: "Ex. Head of Rural Sales", company: "Dabur" },
         { initials: "IF", title: "Ex. National Distribution Manager", company: "ITC Foods" },
@@ -514,15 +529,15 @@ const CASE_STUDIES: CaseStudy[][] = [
     {
       badge: "Advisor Connect",
       subIndustry: "Food Service",
-      headline: "Alternatives placed an operating advisor with a private equity firm to support a QSR franchising scale-up.",
+      headline: "Alternatives supported a private equity firm in appointing an operating advisor for a quick service restaurant chain planning to scale through franchising.",
       sector: "Food Service",
       scope: "Operating Advisor",
       duration: "12 weeks",
       overview: [
-        "Alternatives identified an operating advisor with direct QSR franchising and expansion experience in the Indian market.",
-        "The advisor supported franchisee selection criteria, unit economics benchmarking, and store rollout sequencing.",
+        "Alternatives identified QSR operators with experience in franchise model design, unit economics, and multi-city rollouts.",
+        "The advisor reviewed store formats, supply chain, and franchisee selection criteria, and helped the management team build a three-year expansion plan.",
       ],
-      quote: "Alternatives helped the client build a disciplined franchise expansion playbook.",
+      quote: "Alternatives helped the client move to a franchise-led growth model with clear unit-level targets.",
       experts: [
         { initials: "JF", title: "Ex. COO", company: "Jubilant FoodWorks" },
         { initials: "MI", title: "Ex. Head of Franchising", company: "McDonald's India" },
@@ -533,15 +548,15 @@ const CASE_STUDIES: CaseStudy[][] = [
     {
       badge: "Surveys",
       subIndustry: "Retail",
-      headline: "Alternatives supported a consumer fund in surveying urban households on the shift toward quick-commerce grocery shopping.",
+      headline: "Alternatives supported a consumer-focused fund in surveying urban households on grocery shopping behaviour and the shift towards quick commerce.",
       sector: "Retail",
-      scope: "Quantitative Survey",
-      duration: "2 weeks, 1,500+ households, 8 metros",
+      scope: "Consumer Survey",
+      duration: "2 weeks",
       overview: [
-        "Alternatives surveyed households across eight metros on grocery spend, channel mix, and quick-commerce adoption drivers.",
-        "The results were segmented by income cohort and city tier to inform the fund's category thesis.",
+        "Alternatives worked with category and retail experts to design the questionnaire and reached over 1,500 households across eight metros.",
+        "The survey captured basket size, order frequency, category migration from modern trade, and price sensitivity for delivery fees.",
       ],
-      quote: "Alternatives helped the client quantify how fast quick-commerce is displacing traditional grocery trips.",
+      quote: "Alternatives helped the client assess the durability of quick commerce demand and its impact on traditional retail.",
       experts: [
         { initials: "B", title: "Ex. Head of Category, Grocery", company: "BigBasket" },
         { initials: "B", title: "Ex. VP Operations", company: "Blinkit" },
@@ -560,11 +575,11 @@ const CASE_CARD_GRADIENTS = [
 ];
 
 const STATS = [
-  { target: null as number | null, suffix: "", label: "Year Set Up", value: "2023" },
-  { target: 100000, suffix: "+", label: "Experts Empaneled" },
+  { target: null as number | null, suffix: "", label: "Founded", value: "2023" },
+  { target: 250000, suffix: "+", label: "Experts Empaneled" },
   { target: 40, suffix: "", label: "Sectors and Sub-Sectors Covered" },
   { target: 1000, suffix: "+", label: "Mandates Executed" },
-  { target: 30, suffix: "+", label: "Countries where Experts Empaneled" },
+  { target: 30, suffix: "+", label: "Countries Covered" },
   { target: 100, suffix: "+", label: "Clients" },
 ];
 
@@ -859,18 +874,9 @@ export default function Home() {
         <div style={{ display: "grid", gridTemplateColumns: "minmax(0, 300px) minmax(0, 1fr)", gap: "clamp(24px, 5vw, 64px)", alignItems: "center" }}>
           <div>
             <span className="alt-kicker">Global Reach</span>
-            <p style={{ fontSize: 15.5, lineHeight: 1.7, color: C.muted, margin: "0 0 20px" }}>
-              Experts empaneled across 30+ countries, with concentrations in the markets our clients transact in most.
-            </p>
-            <div style={{ display: "grid", gap: 10 }}>
-              <div style={{ display: "flex", alignItems: "baseline", gap: 10, borderTop: `1px solid ${C.divider}`, paddingTop: 10 }}>
-                <span style={{ width: 7, height: 7, background: C.accent, display: "inline-block" }} />
-                <span style={{ fontSize: 13.5, color: C.muted }}>Primary hubs</span>
-              </div>
-              <div style={{ display: "flex", alignItems: "baseline", gap: 10, borderTop: `1px solid ${C.divider}`, paddingTop: 10 }}>
-                <span style={{ width: 7, height: 7, background: "#b3b2ff", display: "inline-block" }} />
-                <span style={{ fontSize: 13.5, color: C.muted }}>Select a location to view sample case illustrations</span>
-              </div>
+            <div style={{ display: "flex", alignItems: "baseline", gap: 10, borderTop: `1px solid ${C.divider}`, paddingTop: 10 }}>
+              <span style={{ width: 7, height: 7, background: C.accent, display: "inline-block" }} />
+              <span style={{ fontSize: 13.5, color: C.muted }}>Select a location to view sample case illustrations</span>
             </div>
           </div>
           <div style={{ position: "relative", aspectRatio: "16 / 9", border: `1px solid ${C.divider}`, overflow: "hidden" }}>
@@ -986,7 +992,7 @@ export default function Home() {
             {CLIENT_TYPES.map((c) => {
               const dark = c.headerPattern !== "dots";
               return (
-                <div key={c.title} className="alt-ctcard" style={{ background: C.surface, border: "none", borderRadius: 20, overflow: "hidden" }}>
+                <div key={c.title} className="alt-ctcard" style={{ background: c.cardBg ?? C.surface, border: "none", borderRadius: 20, overflow: "hidden" }}>
                   <div style={{ position: "relative", height: 200, background: c.headerBg, overflow: "hidden", borderBottom: c.headerPattern === "dots" ? `1px solid ${C.divider}` : "none" }}>
                     <ClientCardPattern kind={c.headerPattern} />
                     <span
@@ -1001,11 +1007,11 @@ export default function Home() {
                     </span>
                   </div>
                   <div style={{ padding: "28px 28px 34px" }}>
-                    <p style={{ fontSize: 12, color: C.accent, margin: "0 0 18px" }}>{c.roman}</p>
-                    <h3 style={{ fontSize: 22, lineHeight: 1.25, margin: "0 0 16px", fontWeight: 500 }}>{c.title}</h3>
+                    <p style={{ fontSize: 12, color: c.bulletColor ?? C.accent, margin: "0 0 18px" }}>{c.roman}</p>
+                    <h3 style={{ fontSize: 22, lineHeight: 1.25, margin: "0 0 16px", fontWeight: 500, color: c.titleColor }}>{c.title}</h3>
                     <div style={{ display: "grid", gap: 0 }}>
                       {c.points.map((pt) => (
-                        <p key={pt} style={{ fontSize: 14, lineHeight: 1.6, color: C.muted, margin: 0, padding: "7px 0", borderTop: `1px solid ${C.divider}` }}>{pt}</p>
+                        <p key={pt} style={{ fontSize: 14, lineHeight: 1.6, color: c.bodyText ?? C.muted, margin: 0, padding: "7px 0", borderTop: `1px solid ${c.divider ?? C.divider}` }}>{pt}</p>
                       ))}
                     </div>
                   </div>
